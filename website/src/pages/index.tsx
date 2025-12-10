@@ -21,7 +21,7 @@ function HomepageHeader() {
           </Link>
           <Link
             className="button button--outline button--secondary button--lg"
-            to="https://github.com/sufyanarain/plant-biotech-ai">
+            to="https://github.com/biologist01/-ai-in-plantbiotics-book">
             View on GitHub ⭐
           </Link>
         </div>
