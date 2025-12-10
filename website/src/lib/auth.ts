@@ -2,7 +2,7 @@
 
 const BACKEND_URL = process.env.NODE_ENV === 'development'
   ? 'http://localhost:8000'
-  : 'https://physical-ai-backend-production-b62f.up.railway.app';
+  : 'https://physical-ai-backend-production-1c69.up.railway.app';
 
 // API client for our backend
 export const api = {

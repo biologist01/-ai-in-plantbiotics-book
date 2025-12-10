@@ -11,7 +11,7 @@ interface Message {
 // Use local backend in development, Railway in production
 const BACKEND_URL = process.env.NODE_ENV === 'development'
   ? 'http://localhost:8000'
-  : 'https://physical-ai-backend-production-b62f.up.railway.app';
+  : 'https://physical-ai-backend-production-1c69.up.railway.app';
 
 export default function RAGChatbot(): React.ReactElement {
   const [isOpen, setIsOpen] = useState(false);
