@@ -115,7 +115,7 @@ Uses LLMs intelligently for:
 2. Read `README.md` for overview
 3. Review JSON files for detailed specifications
 4. Check implementation files for actual working code
-5. See live demo at: https://sufyanarain.github.io/physical-ai-book/
+5. See live demo at: https://biologist01.github.io/-ai-in-plantbiotics-book/
 
 **Key Points**:
 - These are NOT just theoretical - they're extracted from working code

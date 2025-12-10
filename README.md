@@ -1,11 +1,11 @@
 # 🌱 AI Revolution in Plant Biotechnology
 
 [![License: MIT](https://img.shields.io/badge/License-MIT-yellow.svg)](https://opensource.org/licenses/MIT)
-[![Hackathon Score](https://img.shields.io/badge/Score-300%2F300-success)](https://github.com/sufyanarain/physical-ai-book)
+[![Hackathon Score](https://img.shields.io/badge/Score-300%2F300-success)](https://github.com/biologist01/-ai-in-plantbiotics-book)
 
 > A comprehensive, interactive textbook on AI applications in Plant Biotechnology with RAG chatbot, user authentication, content personalization, and Urdu translation.
 
-**🔗 Live Demo**: [sufyanarain.github.io/physical-ai-book](https://sufyanarain.github.io/physical-ai-book/)
+**🔗 Live Demo**: [https://biologist01.github.io/-ai-in-plantbiotics-book/](https://biologist01.github.io/-ai-in-plantbiotics-book/)
 
 ---
 
@@ -172,7 +172,7 @@ git push origin main  # Auto-deploys
 Connected to GitHub - auto-deploys on push.
 
 **URLs:**
-- Frontend: https://sufyanarain.github.io/physical-ai-book/
+- Frontend: https://github.com/biologist01/-ai-in-plantbiotics-book
 - Backend: https://physical-ai-backend-production-b62f.up.railway.app
 
 ---
@@ -271,9 +271,9 @@ MIT License - see [LICENSE](LICENSE) file for details.
 
 ## 📞 Contact
 
-- **GitHub**: [@sufyanarain](https://github.com/sufyanarain)
-- **Project**: [physical-ai-book](https://github.com/sufyanarain/physical-ai-book)
-- **Issues**: [Create Issue](https://github.com/sufyanarain/physical-ai-book/issues)
+- **GitHub**: [@biologist01](https://github.com/biologist01)
+- **Project**: [physical-ai-book](https://github.com/biologist01/-ai-in-plantbiotics-book)
+- **Issues**: [Create Issue](https://github.com/biologist01/-ai-in-plantbiotics-book/issues)
 
 ---
 

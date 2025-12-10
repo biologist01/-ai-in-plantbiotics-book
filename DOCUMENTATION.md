@@ -7,7 +7,7 @@
 **🏆 Hackathon Score: 300/300 Points**
 
 ### Live Deployments
-- **Frontend**: https://sufyanarain.github.io/physical-ai-book/
+- **Frontend**: https://biologist01.github.io/-ai-in-plantbiotics-book/
 - **Backend**: https://physical-ai-backend-production-b62f.up.railway.app
 
 ---
@@ -423,8 +423,8 @@ python generate_urdu_docs.py
 ## 👥 Support
 
 For questions or issues:
-- GitHub Issues: [Create Issue](https://github.com/sufyanarain/physical-ai-book/issues)
-- Project Link: https://sufyanarain.github.io/physical-ai-book/
+- GitHub Issues: [Create Issue](https://github.com/biologist01/-ai-in-plantbiotics-book/issues)
+- Project Link: https://github.com/biologist01/-ai-in-plantbiotics-book
 
 ---
 
