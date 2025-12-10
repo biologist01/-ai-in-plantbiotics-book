@@ -8,11 +8,11 @@ const config: Config = {
   tagline: 'Transforming Agriculture with Artificial Intelligence',
   favicon: 'img/favicon.ico',
 
-  url: 'https://sufyanarain.github.io',
-  baseUrl: '/plant-biotech-ai/',
+  url: 'https://biologist01.github.io',
+  baseUrl: '/-ai-in-plantbiotics-book/',
 
-  organizationName: 'sufyanarain',
-  projectName: 'plant-biotech-ai',
+  organizationName: 'biologist01',
+  projectName: '-ai-in-plantbiotics-book',
 
   onBrokenLinks: 'throw',
   onBrokenMarkdownLinks: 'warn',
@@ -29,7 +29,7 @@ const config: Config = {
         docs: {
           sidebarPath: './sidebars.ts',
           editUrl:
-            'https://github.com/sufyanarain/plant-biotech-ai/tree/main/website/',
+            'https://github.com/biologist01/-ai-in-plantbiotics-book/tree/main/website/',
         },
         blog: false,
         theme: {
@@ -47,7 +47,7 @@ const config: Config = {
         path: 'docs-software',
         routeBasePath: 'docs-software',
         sidebarPath: './sidebars.ts',
-        editUrl: 'https://github.com/sufyanarain/plant-biotech-ai/tree/main/website/',
+        editUrl: 'https://github.com/biologist01/-ai-in-plantbiotics-book/tree/main/website/',
       },
     ],
     [
@@ -57,7 +57,7 @@ const config: Config = {
         path: 'docs-hardware',
         routeBasePath: 'docs-hardware',
         sidebarPath: './sidebars.ts',
-        editUrl: 'https://github.com/sufyanarain/plant-biotech-ai/tree/main/website/',
+        editUrl: 'https://github.com/biologist01/-ai-in-plantbiotics-book/tree/main/website/',
       },
     ],
     [
@@ -67,7 +67,7 @@ const config: Config = {
         path: 'docs-urdu',
         routeBasePath: 'docs-urdu',
         sidebarPath: './sidebars-urdu.ts',
-        editUrl: 'https://github.com/sufyanarain/plant-biotech-ai/tree/main/website/',
+        editUrl: 'https://github.com/biologist01/-ai-in-plantbiotics-book/tree/main/website/',
       },
     ],
     [
@@ -77,7 +77,7 @@ const config: Config = {
         path: 'docs-urdu-software',
         routeBasePath: 'docs-urdu-software',
         sidebarPath: './sidebars-urdu.ts',
-        editUrl: 'https://github.com/sufyanarain/plant-biotech-ai/tree/main/website/',
+        editUrl: 'https://github.com/biologist01/-ai-in-plantbiotics-book/tree/main/website/',
       },
     ],
     [
@@ -87,7 +87,7 @@ const config: Config = {
         path: 'docs-urdu-hardware',
         routeBasePath: 'docs-urdu-hardware',
         sidebarPath: './sidebars-urdu.ts',
-        editUrl: 'https://github.com/sufyanarain/plant-biotech-ai/tree/main/website/',
+        editUrl: 'https://github.com/biologist01/-ai-in-plantbiotics-book/tree/main/website/',
       },
     ],
   ],
@@ -108,7 +108,7 @@ const config: Config = {
           label: 'Textbook',
         },
         {
-          href: 'https://github.com/sufyanarain/plant-biotech-ai',
+          href: 'https://github.com/biologist01/-ai-in-plantbiotics-book',
           label: 'GitHub',
           position: 'right',
         },
@@ -135,7 +135,7 @@ const config: Config = {
           items: [
             {
               label: 'GitHub',
-              href: 'https://github.com/sufyanarain/plant-biotech-ai',
+              href: 'https://github.com/biologist01/-ai-in-plantbiotics-book',
             },
             {
               label: 'Panaversity',
