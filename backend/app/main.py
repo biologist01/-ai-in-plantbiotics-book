@@ -39,8 +39,6 @@ allowed_origins = [
     "http://127.0.0.1:3000",
     "http://127.0.0.1:5173",
     "https://sufyanarain.github.io",  # GitHub Pages
-    "https://biologist01.github.io",  # New GitHub Pages
-    "https://physical-ai-backend-production-4877.up.railway.app",  # Railway backend
 ]
 
 app.add_middleware(
