@@ -18,7 +18,7 @@ export default function RAGChatbot(): React.ReactElement {
   const [messages, setMessages] = useState<Message[]>([
     {
       role: 'assistant',
-      content: 'Hi! I\'m your Physical AI textbook assistant. Ask me anything about robotics, ROS 2, simulation, or any content from the book! You can also select text on the page and ask me questions about it.'
+      content: 'Hi! I\'m your AI Plant Biotechnology assistant. Ask me anything about ML in agriculture, computer vision for plants, genomics, or any content from the book! You can also select text on the page and ask me questions about it.'
     }
   ]);
   const [input, setInput] = useState('');
@@ -123,7 +123,7 @@ export default function RAGChatbot(): React.ReactElement {
         <div className="chatbot-window">
           {/* Header */}
           <div className="chatbot-header">
-            <span>🤖 Physical AI Assistant</span>
+            <span>🌱 Plant AI Assistant</span>
             <button
               className="chatbot-close"
               onClick={() => setIsOpen(false)}

@@ -26,8 +26,8 @@ logger = logging.getLogger(__name__)
 groq_client = Groq(api_key=settings.groq_api_key)
 
 app = FastAPI(
-    title="Physical AI Textbook RAG API",
-    description="RAG chatbot API for Physical AI & Humanoid Robotics textbook",
+    title="Plant Biotechnology AI Textbook RAG API",
+    description="RAG chatbot API for AI Revolution in Plant Biotechnology textbook",
     version="1.0.0"
 )
 

@@ -1,31 +1,123 @@
 .heroBanner {
-  padding: 4rem 0;
+  padding: 8rem 0;
   text-align: center;
   position: relative;
   overflow: hidden;
+  background: linear-gradient(135deg, #0f172a 0%, #0b3b5a 45%, #0ea5e9 100%);
+  color: white;
+  clip-path: polygon(0 0, 100% 0, 100% 85%, 0 100%);
+}
+
+.heroTitle {
+  font-size: 4rem;
+  font-weight: 800;
+  margin-bottom: 1.5rem;
+  line-height: 1.2;
+  text-shadow: 0 2px 10px rgba(0,0,0,0.1);
+}
+
+.heroSubtitle {
+  font-size: 1.5rem;
+  margin-bottom: 3rem;
+  opacity: 0.9;
+  max-width: 800px;
+  margin-left: auto;
+  margin-right: auto;
 }
 
 .buttons {
   display: flex;
   align-items: center;
   justify-content: center;
-  margin-top: 2rem;
+  gap: 1.5rem;
+  margin-bottom: 4rem;
 }
 
 .features {
+  padding: 6rem 0;
+  background-color: var(--ifm-background-color);
+}
+
+.featureCard {
+  padding: 2.5rem;
+  border-radius: 1.5rem;
+  background: var(--ifm-card-background-color);
+  box-shadow: 0 10px 30px rgba(0, 0, 0, 0.05);
+  transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+  height: 100%;
+  border: 1px solid var(--ifm-color-emphasis-200);
+  position: relative;
+  overflow: hidden;
+}
+
+.featureCard:hover {
+  transform: translateY(-10px);
+  box-shadow: 0 20px 40px rgba(14, 165, 233, 0.18);
+  border-color: var(--ifm-color-primary);
+}
+
+.featureIcon {
+  font-size: 3.5rem;
+  margin-bottom: 1.5rem;
+  background: linear-gradient(135deg, rgba(14, 165, 233, 0.12) 0%, rgba(8, 47, 73, 0.16) 100%);
+  width: 90px;
+  height: 90px;
+  border-radius: 20px;
   display: flex;
   align-items: center;
-  padding: 2rem 0;
-  width: 100%;
+  justify-content: center;
+  color: var(--ifm-color-primary);
+}
+
+.sectionTitle {
+  text-align: center;
+  margin-bottom: 4rem;
+  font-size: 3rem;
+  font-weight: 700;
+  background: linear-gradient(135deg, #0f172a 0%, #0ea5e9 100%);
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
 }
 
 .ctaSection {
-  padding: 4rem 0;
-  background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+  padding: 8rem 0;
+  background: linear-gradient(135deg, #0ea5e9 0%, #f59e0b 100%);
   color: white;
+  text-align: center;
+  position: relative;
 }
 
 .ctaSection h2 {
+  font-size: 3rem;
+  margin-bottom: 1.5rem;
   color: white;
-  margin-bottom: 1rem;
+}
+
+.ctaSection p {
+  font-size: 1.5rem;
+  margin-bottom: 2.5rem;
+  opacity: 0.9;
+}
+
+@media (max-width: 768px) {
+  .heroBanner {
+    padding: 4rem 0;
+    clip-path: none;
+  }
+  .heroTitle {
+    font-size: 2.5rem;
+  }
+  .heroSubtitle {
+    font-size: 1.2rem;
+  }
+  .buttons {
+    flex-direction: column;
+    width: 100%;
+  }
+  .buttons a {
+    width: 100%;
+  }
+  .featureCard {
+    margin-bottom: 1rem;
+  }
 }

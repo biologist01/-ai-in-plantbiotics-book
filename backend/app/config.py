@@ -30,7 +30,7 @@ class Settings(BaseSettings):
     
     # Embedding Configuration
     embedding_model: str = "embed-english-v3.0"
-    embedding_dimension: int = 1024
+    embedding_dimension: int = 384
     
     # Chunking Configuration
     chunk_size: int = 1000

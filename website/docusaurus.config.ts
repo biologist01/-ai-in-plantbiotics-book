@@ -2,17 +2,17 @@ import {themes as prismThemes} from 'prism-react-renderer';
 import type {Config} from '@docusaurus/types';
 import type * as Preset from '@docusaurus/preset-classic';
 
-// Replace 'yourusername' and 'physical-ai-textbook' with your actual values
+// Plant Biotechnology AI Textbook configuration
 const config: Config = {
-  title: '🤖 Physical AI & Humanoid Robotics',
-  tagline: 'Master the future of embodied intelligence',
+  title: 'AI Revolution in Plant Biotechnology',
+  tagline: 'Transforming Agriculture with Artificial Intelligence',
   favicon: 'img/favicon.ico',
 
   url: 'https://sufyanarain.github.io',
-  baseUrl: '/physical-ai-book/',
+  baseUrl: '/plant-biotech-ai/',
 
   organizationName: 'sufyanarain',
-  projectName: 'physical-ai-book',
+  projectName: 'plant-biotech-ai',
 
   onBrokenLinks: 'throw',
   onBrokenMarkdownLinks: 'warn',
@@ -29,7 +29,7 @@ const config: Config = {
         docs: {
           sidebarPath: './sidebars.ts',
           editUrl:
-            'https://github.com/yourusername/physical-ai-textbook/tree/main/website/',
+            'https://github.com/sufyanarain/plant-biotech-ai/tree/main/website/',
         },
         blog: false,
         theme: {
@@ -47,7 +47,7 @@ const config: Config = {
         path: 'docs-software',
         routeBasePath: 'docs-software',
         sidebarPath: './sidebars.ts',
-        editUrl: 'https://github.com/sufyanarain/physical-ai-book/tree/main/website/',
+        editUrl: 'https://github.com/sufyanarain/plant-biotech-ai/tree/main/website/',
       },
     ],
     [
@@ -57,7 +57,7 @@ const config: Config = {
         path: 'docs-hardware',
         routeBasePath: 'docs-hardware',
         sidebarPath: './sidebars.ts',
-        editUrl: 'https://github.com/sufyanarain/physical-ai-book/tree/main/website/',
+        editUrl: 'https://github.com/sufyanarain/plant-biotech-ai/tree/main/website/',
       },
     ],
     [
@@ -67,7 +67,7 @@ const config: Config = {
         path: 'docs-urdu',
         routeBasePath: 'docs-urdu',
         sidebarPath: './sidebars-urdu.ts',
-        editUrl: 'https://github.com/sufyanarain/physical-ai-book/tree/main/website/',
+        editUrl: 'https://github.com/sufyanarain/plant-biotech-ai/tree/main/website/',
       },
     ],
     [
@@ -77,7 +77,7 @@ const config: Config = {
         path: 'docs-urdu-software',
         routeBasePath: 'docs-urdu-software',
         sidebarPath: './sidebars-urdu.ts',
-        editUrl: 'https://github.com/sufyanarain/physical-ai-book/tree/main/website/',
+        editUrl: 'https://github.com/sufyanarain/plant-biotech-ai/tree/main/website/',
       },
     ],
     [
@@ -87,7 +87,7 @@ const config: Config = {
         path: 'docs-urdu-hardware',
         routeBasePath: 'docs-urdu-hardware',
         sidebarPath: './sidebars-urdu.ts',
-        editUrl: 'https://github.com/sufyanarain/physical-ai-book/tree/main/website/',
+        editUrl: 'https://github.com/sufyanarain/plant-biotech-ai/tree/main/website/',
       },
     ],
   ],
@@ -95,9 +95,9 @@ const config: Config = {
   themeConfig: {
     image: 'img/docusaurus-social-card.jpg',
     navbar: {
-      title: 'Physical AI',
+      title: 'Plant AI',
       logo: {
-        alt: 'Physical AI Logo',
+        alt: 'Plant AI Logo',
         src: 'img/logo.svg',
       },
       items: [
@@ -108,7 +108,7 @@ const config: Config = {
           label: 'Textbook',
         },
         {
-          href: 'https://github.com/yourusername/physical-ai-textbook',
+          href: 'https://github.com/sufyanarain/plant-biotech-ai',
           label: 'GitHub',
           position: 'right',
         },
@@ -126,7 +126,7 @@ const config: Config = {
             },
             {
               label: 'Get Started',
-              to: '/docs/module-1/ros2-intro',
+              to: '/docs/module-1/ml-intro',
             },
           ],
         },
@@ -135,7 +135,7 @@ const config: Config = {
           items: [
             {
               label: 'GitHub',
-              href: 'https://github.com/yourusername/physical-ai-textbook',
+              href: 'https://github.com/sufyanarain/plant-biotech-ai',
             },
             {
               label: 'Panaversity',
@@ -144,7 +144,7 @@ const config: Config = {
           ],
         },
       ],
-      copyright: `Copyright © ${new Date().getFullYear()} Physical AI Textbook. Created by <strong>Muhammad Sufyan</strong> for Panaversity Hackathon.`,
+      copyright: `Copyright © ${new Date().getFullYear()} Plant AI Textbook. Created by <strong>Fatima Amir</strong> for Panaversity Hackathon.`,
     },
     prism: {
       theme: prismThemes.github,

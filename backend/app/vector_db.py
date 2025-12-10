@@ -19,7 +19,7 @@ class VectorDB:
         self.collection_name = "physical_ai_textbook"
         # Use Cohere's free embedding API
         self.cohere_client = cohere.Client(settings.cohere_api_key)
-        self.vector_size = 1024  # Cohere embed-english-light-v3.0 produces 1024-dimensional vectors
+        self.vector_size = 384  # Cohere embed-english-light-v3.0 produces 384-dimensional vectors
     
     def create_collection(self):
         """Create collection if it doesn't exist"""
@@ -45,41 +45,84 @@ class VectorDB:
         )
         return response.embeddings
     
-    def add_documents(self, documents: List[Dict[str, str]], batch_size: int = 50):
-        """Add documents to the vector database in batches"""
+    def add_documents(self, documents: List[Dict[str, str]], batch_size: int = 10):
+        """Add documents to the vector database in batches with rate limiting"""
+        import time
+
         total_docs = len(documents)
 
         for batch_start in range(0, total_docs, batch_size):
             batch_end = min(batch_start + batch_size, total_docs)
             batch_docs = documents[batch_start:batch_end]
 
-            texts = [doc["content"] for doc in batch_docs]
-            embeddings = self.get_embeddings(texts)
+            try:
+                texts = [doc["content"] for doc in batch_docs]
+                embeddings = self.get_embeddings(texts)
 
-            if not embeddings:
-                print(f"Failed to generate embeddings for batch {batch_start}-{batch_end}")
-                continue
+                if not embeddings:
+                    print(f"Failed to generate embeddings for batch {batch_start}-{batch_end}")
+                    continue
 
-            points = []
-            for i, (doc, embedding) in enumerate(zip(batch_docs, embeddings)):
-                point_id = hashlib.md5(doc["content"].encode()).hexdigest()
-                points.append(
-                    PointStruct(
-                        id=point_id,
-                        vector=embedding,
-                        payload={
-                            "title": doc.get("title", ""),
-                            "content": doc["content"],
-                            "source": doc.get("source", "")
-                        }
+                points = []
+                for i, (doc, embedding) in enumerate(zip(batch_docs, embeddings)):
+                    point_id = hashlib.md5(doc["content"].encode()).hexdigest()
+                    points.append(
+                        PointStruct(
+                            id=point_id,
+                            vector=embedding,
+                            payload={
+                                "title": doc.get("title", ""),
+                                "content": doc["content"],
+                                "source": doc.get("source", ""),
+                                "language": doc.get("language", "english")
+                            }
+                        )
                     )
-                )
 
-            self.client.upsert(
-                collection_name=self.collection_name,
-                points=points
-            )
-            print(f"Added batch {batch_start+1}-{batch_end} ({len(points)} documents)")
+                self.client.upsert(
+                    collection_name=self.collection_name,
+                    points=points
+                )
+                print(f"Added batch {batch_start+1}-{batch_end} ({len(points)} documents)")
+
+            except Exception as e:
+                print(f"Error processing batch {batch_start}-{batch_end}: {e}")
+                print("Waiting 30 seconds before retrying...")
+                time.sleep(30)
+                try:
+                    # Retry once
+                    embeddings = self.get_embeddings(texts)
+                    if embeddings:
+                        points = []
+                        for i, (doc, embedding) in enumerate(zip(batch_docs, embeddings)):
+                            point_id = hashlib.md5(doc["content"].encode()).hexdigest()
+                            points.append(
+                                PointStruct(
+                                    id=point_id,
+                                    vector=embedding,
+                                    payload={
+                                        "title": doc.get("title", ""),
+                                        "content": doc["content"],
+                                        "source": doc.get("source", ""),
+                                        "language": doc.get("language", "english")
+                                    }
+                                )
+                            )
+
+                        self.client.upsert(
+                            collection_name=self.collection_name,
+                            points=points
+                        )
+                        print(f"Successfully added batch {batch_start+1}-{batch_end} on retry")
+                    else:
+                        print(f"Failed to generate embeddings on retry for batch {batch_start}-{batch_end}")
+                except Exception as retry_e:
+                    print(f"Failed retry for batch {batch_start}-{batch_end}: {retry_e}")
+                    continue
+
+            # Rate limiting: wait 10 seconds between batches to avoid API limits
+            if batch_end < total_docs:
+                time.sleep(10)
     
     def search(self, query: str, limit: int = 5) -> List[Dict[str, Any]]:
         """Search for similar documents"""

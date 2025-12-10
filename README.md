@@ -1,9 +1,9 @@
-# 🤖 Physical AI & Humanoid Robotics Textbook
+# 🌱 AI Revolution in Plant Biotechnology
 
 [![License: MIT](https://img.shields.io/badge/License-MIT-yellow.svg)](https://opensource.org/licenses/MIT)
 [![Hackathon Score](https://img.shields.io/badge/Score-300%2F300-success)](https://github.com/sufyanarain/physical-ai-book)
 
-> A comprehensive, interactive textbook on Physical AI and Humanoid Robotics with RAG chatbot, user authentication, content personalization, and Urdu translation.
+> A comprehensive, interactive textbook on AI applications in Plant Biotechnology with RAG chatbot, user authentication, content personalization, and Urdu translation.
 
 **🔗 Live Demo**: [sufyanarain.github.io/physical-ai-book](https://sufyanarain.github.io/physical-ai-book/)
 
@@ -12,7 +12,7 @@
 ## 🌟 Features
 
 ### 📚 Core Features (100/100 Points)
-- ✅ Comprehensive textbook with 4 modules (ROS 2, Simulation, NVIDIA Isaac, VLA)
+- ✅ Comprehensive textbook with 4 modules (ML for Plants, Computer Vision, Genomics AI, Precision Agriculture)
 - ✅ RAG Chatbot powered by OpenAI + Qdrant
 - ✅ Selected text support for context-aware Q&A
 - ✅ Beautiful UI with Docusaurus
@@ -30,23 +30,23 @@
 
 ## 📚 Course Modules
 
-### Module 1: The Robotic Nervous System (ROS 2)
-- ROS 2 architecture and fundamentals
-- Nodes, topics, services, actions
-- Custom messages and URDF
-- TF2 coordinate transforms
+### Module 1: Machine Learning Foundations for Plant Science
+- Introduction to ML in agriculture
+- Data collection and preprocessing
+- Supervised learning for plant classification
+- Time series analysis for growth prediction
 
-### Module 2: The Digital Twin (Gazebo & Unity)
-- Physics simulation with Gazebo
-- Sensor modeling (LiDAR, cameras, IMU)
-- Unity integration for visualization
-- Sim-to-real transfer techniques
+### Module 2: Computer Vision for Plant Analysis
+- Image acquisition and processing
+- Plant disease detection using CNNs
+- Phenotyping and trait extraction
+- Automated monitoring systems
 
-### Module 3: The AI-Robot Brain (NVIDIA Isaac™)
-- Isaac Sim for photorealistic simulation
-- Isaac ROS for hardware-accelerated perception
-- VSLAM and Nav2 navigation
-- Synthetic data generation
+### Module 3: AI in Plant Genomics & Breeding
+- Genomic data analysis with deep learning
+- CRISPR target prediction
+- Trait prediction and marker-assisted selection
+- Multi-omics integration
 
 ### Module 4: Vision-Language-Action (VLA)
 - Voice-to-action with OpenAI Whisper

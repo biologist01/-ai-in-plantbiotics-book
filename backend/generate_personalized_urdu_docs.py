@@ -17,7 +17,7 @@ async def personalize_urdu_content(client, content, background_type):
     
     if background_type == "software":
         system_prompt = """
-        You are adapting Urdu technical documentation for SOFTWARE DEVELOPERS.
+        You are adapting Urdu technical documentation for SOFTWARE DEVELOPERS/DATA SCIENTISTS working in Plant Biotechnology AI.
         
         IMPORTANT:
         1. Keep ALL Urdu text in Urdu
@@ -26,15 +26,15 @@ async def personalize_urdu_content(client, content, background_type):
         4. Keep markdown formatting exactly
         
         ADAPT THE CONTENT BY:
-        - Adding detailed explanations of hardware/electronics concepts in Urdu
-        - Using programming analogies (APIs, frameworks, operating systems)
-        - Assume knowledge of: Python, OOP, algorithms, data structures
-        - Explain in Urdu: Circuits, sensors, actuators, motors, mechanical systems
-        - Add software developer perspective to Urdu explanations
+        - Adding detailed explanations of plant biology, genomics, breeding, phenotyping concepts in Urdu
+        - Using programming analogies (APIs, databases, neural networks, data pipelines, ML models)
+        - Assume knowledge of: Python, ML frameworks, deep learning, cloud computing, algorithms
+        - Explain in Urdu: Plant physiology, genetics, CRISPR, lab protocols, agricultural practices
+        - Add software developer perspective to Urdu explanations about biotechnology
         """
     else:  # hardware
         system_prompt = """
-        You are adapting Urdu technical documentation for HARDWARE/ELECTRONICS ENGINEERS.
+        You are adapting Urdu technical documentation for AGRICULTURAL/BIOTECHNOLOGY ENGINEERS working with AI systems.
         
         IMPORTANT:
         1. Keep ALL Urdu text in Urdu
@@ -43,11 +43,11 @@ async def personalize_urdu_content(client, content, background_type):
         4. Keep markdown formatting exactly
         
         ADAPT THE CONTENT BY:
-        - Adding detailed explanations of programming/software concepts in Urdu
-        - Using electronics analogies (microcontrollers, circuits, sensors)
-        - Assume knowledge of: Electronics, mechanics, circuits, sensors
-        - Explain in Urdu: Python syntax, OOP, algorithms, software design patterns
-        - Add hardware engineer perspective to Urdu explanations
+        - Adding detailed explanations of programming, ML algorithms, deep learning concepts in Urdu
+        - Using lab equipment analogies (microscopes, sensors, imaging systems, growth chambers)
+        - Assume knowledge of: Plant biology, genetics, lab work, field equipment, sensors
+        - Explain in Urdu: Python syntax, ML training, neural networks, software libraries, APIs
+        - Add biotechnology engineer perspective to Urdu explanations about AI/ML
         """
     
     try:

@@ -33,7 +33,7 @@ export default function NavbarItemWrapper(props: Props): JSX.Element {
     setUser(null);
     // Redirect to home page after logout
     if (location.pathname.includes('/docs-software/') || location.pathname.includes('/docs-hardware/')) {
-      history.push('/physical-ai-book/');
+      history.push('/plant-biotech-ai/');
     }
   };
 
@@ -46,13 +46,13 @@ export default function NavbarItemWrapper(props: Props): JSX.Element {
 
     if (backgroundType) {
       // If user is on docs page, redirect to their personalized version
-      if (location.pathname.startsWith('/physical-ai-book/docs/')) {
-        const pagePath = location.pathname.replace('/physical-ai-book/docs/', '');
-        const newPath = `/physical-ai-book/docs-${backgroundType}/${pagePath}`;
+      if (location.pathname.startsWith('/plant-biotech-ai/docs/')) {
+        const pagePath = location.pathname.replace('/plant-biotech-ai/docs/', '');
+        const newPath = `/plant-biotech-ai/docs-${backgroundType}/${pagePath}`;
         history.push(newPath + location.search + location.hash);
       } else if (!location.pathname.includes('/docs-software/') && !location.pathname.includes('/docs-hardware/')) {
         // If user is not on a docs page, redirect to intro of their personalized docs
-        history.push(`/physical-ai-book/docs-${backgroundType}/intro`);
+        history.push(`/plant-biotech-ai/docs-${backgroundType}/intro`);
       }
     }
   };

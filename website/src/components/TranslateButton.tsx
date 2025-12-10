@@ -59,46 +59,13 @@ export default function TranslateButton({ content, onTranslate }: TranslateButto
   };
 
   return (
-    <div style={{ marginBottom: '1rem' }}>
+    <div className="translate-button-wrapper">
       <button
         onClick={handleTranslate}
-        style={{
-          padding: '8px 16px',
-          backgroundColor: isUrdu ? '#28a745' : '#007bff',
-          color: 'white',
-          border: 'none',
-          borderRadius: '4px',
-          cursor: 'pointer',
-          fontSize: '14px',
-          fontWeight: '500',
-          display: 'inline-flex',
-          alignItems: 'center',
-          gap: '8px',
-          transition: 'background-color 0.2s'
-        }}
-        onMouseEnter={(e) => {
-          e.currentTarget.style.backgroundColor = isUrdu ? '#218838' : '#0056b3';
-        }}
-        onMouseLeave={(e) => {
-          e.currentTarget.style.backgroundColor = isUrdu ? '#28a745' : '#007bff';
-        }}
+        className={`translate-btn ${isUrdu ? 'translate-btn--active' : ''}`}
       >
-        {isUrdu ? (
-          <>
-            ✓ Show Original
-          </>
-        ) : (
-          <>
-            🌐 Translate to Urdu
-          </>
-        )}
+        {isUrdu ? '✓ Show Original' : '🌐 Translate to Urdu'}
       </button>
-
-      <style>{`
-        @keyframes spin {
-          to { transform: rotate(360deg); }
-        }
-      `}</style>
     </div>
   );
 }

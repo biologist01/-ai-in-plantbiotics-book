@@ -1,42 +1,44 @@
 .personalizeContainer {
-  margin: 20px 0;
-  padding: 16px;
-  background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
-  border-radius: 12px;
-  box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+  margin: 16px 0;
+  padding: 14px;
+  background: linear-gradient(120deg, rgba(15, 23, 42, 0.92) 0%, rgba(11, 59, 90, 0.92) 50%, rgba(14, 165, 233, 0.85) 100%);
+  border-radius: 16px;
+  border: 1px solid rgba(255, 255, 255, 0.08);
+  box-shadow: 0 16px 40px rgba(0, 0, 0, 0.25);
+  backdrop-filter: blur(12px);
 }
 
 .personalizeButton {
   display: flex;
   align-items: center;
-  gap: 8px;
+  gap: 10px;
   width: 100%;
-  padding: 12px 20px;
+  padding: 14px 22px;
   font-size: 16px;
-  font-weight: 600;
-  color: white;
-  background: rgba(255, 255, 255, 0.2);
-  border: 2px solid rgba(255, 255, 255, 0.3);
-  border-radius: 8px;
+  font-weight: 700;
+  color: #0b1224;
+  background: linear-gradient(135deg, #67e8f9 0%, #fbbf24 100%);
+  border: 1px solid rgba(14, 165, 233, 0.35);
+  border-radius: 14px;
   cursor: pointer;
-  transition: all 0.3s ease;
-  backdrop-filter: blur(10px);
+  transition: all 0.25s ease;
+  box-shadow: 0 16px 35px rgba(14, 165, 233, 0.35);
 }
 
 .personalizeButton:hover {
-  background: rgba(255, 255, 255, 0.3);
-  border-color: rgba(255, 255, 255, 0.5);
-  transform: translateY(-2px);
-  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.2);
+  transform: translateY(-2px) scale(1.01);
+  box-shadow: 0 20px 40px rgba(14, 165, 233, 0.4);
 }
 
 .personalizeButton:active {
   transform: translateY(0);
+  box-shadow: 0 10px 24px rgba(14, 165, 233, 0.3);
 }
 
 .personalizeButton.active {
-  background: rgba(255, 255, 255, 0.25);
-  border-color: rgba(255, 255, 255, 0.6);
+  background: linear-gradient(135deg, #0ea5e9 0%, #22d3ee 50%, #a5f3fc 100%);
+  color: #071023;
+  border-color: rgba(14, 165, 233, 0.6);
 }
 
 .icon {
@@ -46,48 +48,41 @@
 
 .personalizeHint {
   margin-top: 12px;
-  padding: 8px 12px;
+  padding: 10px 14px;
   font-size: 13px;
-  color: white;
-  background: rgba(255, 255, 255, 0.15);
-  border-radius: 6px;
+  color: #e2f3ff;
+  background: rgba(255, 255, 255, 0.06);
+  border-radius: 10px;
   text-align: center;
+  border: 1px solid rgba(255, 255, 255, 0.08);
 }
 
 /* Dark mode adjustments */
 [data-theme='dark'] .personalizeContainer {
-  background: linear-gradient(135deg, #4c63d2 0%, #5a3d7a 100%);
+  background: linear-gradient(140deg, rgba(7, 12, 24, 0.92) 0%, rgba(8, 47, 73, 0.9) 60%, rgba(14, 165, 233, 0.85) 100%);
 }
 
 [data-theme='dark'] .personalizeButton {
-  background: rgba(255, 255, 255, 0.15);
-  border-color: rgba(255, 255, 255, 0.25);
-}
-
-[data-theme='dark'] .personalizeButton:hover {
-  background: rgba(255, 255, 255, 0.25);
-  border-color: rgba(255, 255, 255, 0.4);
+  color: #0b1224;
 }
 
 [data-theme='dark'] .personalizeButton.active {
-  background: rgba(255, 255, 255, 0.2);
-  border-color: rgba(255, 255, 255, 0.5);
+  color: #071023;
 }
 
 /* Mobile responsive */
 @media (max-width: 768px) {
   .personalizeContainer {
-    margin: 16px 0;
+    margin: 12px 0;
     padding: 12px;
   }
 
   .personalizeButton {
-    font-size: 14px;
-    padding: 10px 16px;
+    font-size: 15px;
+    padding: 12px 16px;
   }
 
   .personalizeHint {
     font-size: 12px;
-    margin-top: 10px;
   }
 }

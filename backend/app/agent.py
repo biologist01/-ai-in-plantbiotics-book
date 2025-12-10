@@ -42,7 +42,7 @@ class RAGAgent:
         else:
             context = self.retrieve_context(question, limit=5)
         
-        system_prompt = """You are an expert AI assistant specialized in Physical AI and Humanoid Robotics.
+        system_prompt = """You are an expert AI assistant specialized in AI applications in Plant Biotechnology.
 Your role is to answer questions about the textbook content clearly and accurately.
 
 Guidelines:

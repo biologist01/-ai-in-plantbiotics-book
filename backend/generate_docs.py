@@ -1,34 +1,47 @@
 import os
 import asyncio
+import sys
 from groq import AsyncGroq
 from pathlib import Path
 from dotenv import load_dotenv
+
+# Fix Windows console encoding for emojis
+if sys.platform == 'win32':
+    sys.stdout.reconfigure(encoding='utf-8')
 
 # Load environment variables
 load_dotenv()
 
 async def adapt_for_background(client, content, background, instruction):
     """Use Groq LLM to adapt content for specific background."""
-    try:
-        response = await client.chat.completions.create(
-            model="llama-3.3-70b-versatile",
-            messages=[{
-                "role": "system",
-                "content": f"You are adapting technical documentation for users with {background} background. "
-                          f"{instruction}\n\n"
-                          f"IMPORTANT: Maintain ALL markdown formatting, frontmatter (---), links, images, and structure exactly. "
-                          f"Only modify the explanatory text to add helpful context for the target audience."
-            }, {
-                "role": "user",
-                "content": f"Adapt this documentation:\n\n{content}"
-            }],
-            temperature=0.3,
-            max_tokens=8000
-        )
-        return response.choices[0].message.content
-    except Exception as e:
-        print(f"Error adapting content: {e}")
-        return content  # Return original on error
+    max_retries = 3
+    for attempt in range(max_retries):
+        try:
+            response = await client.chat.completions.create(
+                model="llama-3.3-70b-versatile",
+                messages=[{
+                    "role": "system",
+                    "content": f"You are adapting technical documentation for users with {background} background. "
+                              f"{instruction}\n\n"
+                              f"IMPORTANT: Maintain ALL markdown formatting, frontmatter (---), links, images, and structure exactly. "
+                              f"Only modify the explanatory text to add helpful context for the target audience."
+                }, {
+                    "role": "user",
+                    "content": f"Adapt this documentation:\n\n{content}"
+                }],
+                temperature=0.3,
+                max_tokens=8000
+            )
+            # Add rate limiting
+            await asyncio.sleep(2)
+            return response.choices[0].message.content
+        except Exception as e:
+            if attempt < max_retries - 1:
+                print(f"    Retry {attempt + 1}/{max_retries} after error: {str(e)[:100]}")
+                await asyncio.sleep(5 * (attempt + 1))  # Exponential backoff
+            else:
+                print(f"    Error after {max_retries} attempts: {e}")
+                return content  # Return original on final error
 
 async def generate_background_docs():
     """Generate separate documentation for software and hardware backgrounds."""
@@ -64,20 +77,22 @@ async def generate_background_docs():
             print(f"  → Generating software background version...")
             software_content = await adapt_for_background(
                 client, content, "software",
-                "Add detailed explanations for hardware/electronics/robotics concepts. "
-                "Assume user is proficient in programming (Python, OOP, algorithms) but needs help "
-                "understanding circuits, sensors, actuators, motors, mechanical systems, and physical principles. "
-                "Add practical analogies between software and hardware concepts where helpful."
+                "Add detailed explanations for plant biology, agricultural systems, and biotechnology concepts. "
+                "Assume user is proficient in programming (Python, ML frameworks, data science, cloud computing) but needs help "
+                "understanding plant physiology, genomics, breeding, phenotyping, agricultural practices, lab protocols. "
+                "Add practical analogies between software/ML concepts and biological systems where helpful. "
+                "Focus on: algorithms, data pipelines, model architectures, APIs, cloud deployment, scalability."
             )
             
             # Generate hardware background version
             print(f"  → Generating hardware background version...")
             hardware_content = await adapt_for_background(
                 client, content, "hardware",
-                "Add detailed explanations for programming/software/CS concepts. "
-                "Assume user is proficient in electronics and mechanics but needs help with "
-                "code structure, algorithms, data structures, OOP, Python syntax, and software design patterns. "
-                "Add practical analogies between hardware and software concepts where helpful."
+                "Add detailed explanations for programming, ML algorithms, and software engineering concepts. "
+                "Assume user is proficient in plant biology, agriculture, lab equipment, field sensors but needs help with "
+                "Python syntax, ML model training, deep learning architectures, software libraries, code structure. "
+                "Add practical analogies between lab equipment/field sensors and software/ML concepts where helpful. "
+                "Focus on: sensor integration, IoT devices, imaging systems, embedded systems, robotics, practical deployment."
             )
             
             # Save files maintaining directory structure

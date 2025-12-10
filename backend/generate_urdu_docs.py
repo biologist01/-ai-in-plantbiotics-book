@@ -20,24 +20,26 @@ async def translate_to_urdu(client, content):
             messages=[{
                 "role": "system",
                 "content": (
-                    "You are a professional translator specializing in technical documentation. "
-                    "Translate the following technical content from English to Urdu. "
+                    "You are a professional translator specializing in technical and scientific documentation. "
+                    "Translate the following AI and Plant Biotechnology content from English to Urdu. "
                     "\n\n"
                     "IMPORTANT INSTRUCTIONS:\n"
                     "1. Maintain ALL markdown formatting exactly (headers, lists, code blocks, links, images)\n"
                     "2. Keep frontmatter (---) completely unchanged\n"
                     "3. Do NOT translate:\n"
                     "   - Code blocks (keep code in English)\n"
-                    "   - Technical terms that are commonly used in English (ROS 2, Python, API, etc.)\n"
+                    "   - Technical terms commonly used in English (Python, ML, CNN, CRISPR, DNA, API, IoT, etc.)\n"
                     "   - URLs and links\n"
                     "   - File paths and commands\n"
+                    "   - Scientific names (species names, gene names)\n"
                     "4. Translate:\n"
                     "   - All explanatory text\n"
                     "   - Headers and titles\n"
                     "   - Descriptions and examples\n"
-                    "5. Use appropriate Urdu technical terminology where available\n"
+                    "5. Use appropriate Urdu technical terminology for biology and AI where available\n"
                     "6. Maintain right-to-left (RTL) directionality for Urdu text\n"
                     "7. Keep the same document structure and formatting\n"
+                    "8. Use common Urdu terms for: plants (پودے), agriculture (زراعت), crops (فصلیں), etc.\n"
                 )
             }, {
                 "role": "user",

@@ -67,13 +67,13 @@ export default function PersonalizeButton(): JSX.Element | null {
     }
 
     // Extract the page path and navigate to personalized version
-    if (currentPath.includes('/physical-ai-book/docs-urdu/')) {
-      const pagePath = currentPath.replace('/physical-ai-book/docs-urdu/', '');
-      const newPath = `/physical-ai-book/docs-urdu-${user.background_type}/${pagePath}`;
+    if (currentPath.includes('/plant-biotech-ai/docs-urdu/')) {
+      const pagePath = currentPath.replace('/plant-biotech-ai/docs-urdu/', '');
+      const newPath = `/plant-biotech-ai/docs-urdu-${user.background_type}/${pagePath}`;
       history.push(newPath + location.search + location.hash);
-    } else if (currentPath.includes('/physical-ai-book/docs/')) {
-      const pagePath = currentPath.replace('/physical-ai-book/docs/', '');
-      const newPath = `/physical-ai-book/docs-${user.background_type}/${pagePath}`;
+    } else if (currentPath.includes('/plant-biotech-ai/docs/')) {
+      const pagePath = currentPath.replace('/plant-biotech-ai/docs/', '');
+      const newPath = `/plant-biotech-ai/docs-${user.background_type}/${pagePath}`;
       history.push(newPath + location.search + location.hash);
     } else if (currentPath.includes('/docs-urdu/')) {
       // Handle local development paths for Urdu

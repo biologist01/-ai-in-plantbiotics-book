@@ -2,104 +2,119 @@
 sidebar_position: 1
 ---
 
-# Introduction to Physical AI & Humanoid Robotics
+# Introduction to AI Revolution in Plant Biotechnology
 
-Welcome to **Physical AI & Humanoid Robotics** — your comprehensive guide to bridging the gap between digital intelligence and the physical world.
+Welcome to **AI Revolution in Plant Biotechnology** — your comprehensive guide to harnessing artificial intelligence to transform plant science, agriculture, and food security.
 
-## What is Physical AI?
+## What is AI in Plant Biotechnology?
 
-**Physical AI** refers to AI systems that operate in the real world, understanding and interacting with physical environments. Unlike traditional AI confined to digital spaces, Physical AI:
+**AI in Plant Biotechnology** represents the convergence of cutting-edge machine learning, computer vision, genomics, and agricultural science. This field applies artificial intelligence to:
 
-- Comprehends physical laws (gravity, friction, momentum)
-- Processes sensory data (vision, touch, sound)
-- Controls actuators to perform physical tasks
-- Learns from real-world interactions
+- Accelerate crop improvement and breeding programs
+- Detect and diagnose plant diseases early
+- Optimize resource use (water, fertilizers, pesticides)
+- Predict crop yields and growth patterns
+- Analyze complex genomic data for trait discovery
+- Automate phenotyping and monitoring
 
-## Why Humanoid Robots?
+## Why AI for Plants?
 
-Humanoid robots are poised to excel in our human-centered world because they:
+The agricultural sector faces unprecedented challenges in the 21st century:
 
-1. **Share Our Form**: Can navigate spaces designed for humans
-2. **Leverage Human Data**: Train on abundant human movement data
-3. **Natural Interaction**: Communicate through familiar gestures and expressions
-4. **Versatile Applications**: From healthcare to manufacturing
+1. **Food Security**: Need to feed 10 billion people by 2050
+2. **Climate Change**: Adapt crops to changing environments
+3. **Resource Scarcity**: Optimize water and nutrient use
+4. **Sustainability**: Reduce environmental impact
+5. **Speed**: Accelerate breeding cycles from decades to years
+
+AI technologies offer solutions by:
+- Processing vast amounts of agricultural data
+- Identifying patterns invisible to human observation
+- Making real-time decisions in precision agriculture
+- Predicting outcomes before field trials
+- Personalizing treatments for individual plants
 
 ## Course Structure
 
 This textbook is organized into four comprehensive modules:
 
-### Module 1: The Robotic Nervous System (ROS 2)
-Learn the middleware that connects robot components, enabling communication between sensors, actuators, and AI systems.
+### Module 1: Machine Learning Foundations for Plant Science
+Learn the fundamentals of machine learning applied to plant biology, from data collection to predictive modeling.
 
 **Topics:**
-- ROS 2 architecture and core concepts
-- Nodes, topics, services, and actions
-- URDF for robot description
-- Python integration with rclpy
+- Introduction to ML in agriculture
+- Data preprocessing for plant datasets
+- Classification models for plant species
+- Regression for growth prediction
+- Time series analysis for crop monitoring
 
-### Module 2: The Digital Twin (Gazebo & Unity)
-Master physics simulation and environment building for testing robots in virtual worlds before real deployment.
-
-**Topics:**
-- Gazebo simulation fundamentals
-- Physics engines and sensor simulation
-- Unity for high-fidelity rendering
-- Sim-to-real transfer techniques
-
-### Module 3: The AI-Robot Brain (NVIDIA Isaac™)
-Explore NVIDIA's cutting-edge platform for AI-powered robotics, including perception, navigation, and manipulation.
+### Module 2: Computer Vision for Plant Analysis
+Master image processing and deep learning techniques for automated plant analysis and monitoring.
 
 **Topics:**
-- Isaac Sim for photorealistic simulation
-- Isaac ROS for hardware-accelerated perception
-- VSLAM and navigation with Nav2
-- Synthetic data generation
+- Image acquisition systems
+- Deep learning for plant disease detection
+- Automated phenotyping pipelines
+- Object detection for fruits and flowers
+- Segmentation for leaf and root analysis
 
-### Module 4: Vision-Language-Action (VLA)
-Integrate large language models with robotics for natural language control and cognitive planning.
+### Module 3: AI in Plant Genomics & Breeding
+Explore how AI revolutionizes genomics research and accelerates crop improvement programs.
 
 **Topics:**
-- Voice-to-action with OpenAI Whisper
-- LLM-based task planning
-- Multimodal robot control
-- **Capstone Project**: Autonomous humanoid robot
+- Deep learning for genomic sequence analysis
+- CRISPR target prediction with AI
+- Genomic selection and trait prediction
+- Multi-omics data integration
+- AI-assisted breeding strategies
+
+### Module 4: Precision Agriculture & IoT Systems
+Apply AI to create smart farming systems that optimize resources and maximize yields.
+
+**Topics:**
+- IoT sensor networks for farms
+- Yield prediction models
+- Automated irrigation and fertilization
+- Drone-based crop monitoring
+- Farm management decision support systems
 
 ## Learning Outcomes
 
 By completing this course, you will be able to:
 
-✅ Understand the principles of embodied intelligence  
-✅ Build and control robots using ROS 2  
-✅ Simulate realistic robot behaviors in Gazebo and Unity  
-✅ Leverage NVIDIA Isaac for advanced AI capabilities  
-✅ Design humanoid robots for natural human interaction  
-✅ Integrate conversational AI for voice-controlled robotics  
+✅ Apply machine learning to plant science datasets  
+✅ Build computer vision systems for disease detection  
+✅ Analyze genomic data with deep learning  
+✅ Design AI-powered precision agriculture systems  
+✅ Integrate IoT sensors for smart farming  
+✅ Deploy real-world AI solutions in agriculture  
 
 ## Prerequisites
 
-- **Programming**: Python (intermediate level)
-- **Mathematics**: Basic linear algebra, calculus
-- **AI/ML**: Familiarity with machine learning concepts
-- **Hardware**: Access to GPU workstation (NVIDIA RTX recommended)
+- **Programming**: Python (intermediate level recommended)
+- **Mathematics**: Basic statistics and linear algebra
+- **Biology**: High school level biology knowledge
+- **Hardware**: Computer with internet access (GPU optional but helpful)
 
-## The Future of Physical AI
+## The Future of Agriculture
 
-The convergence of AI and robotics is creating unprecedented opportunities:
+The convergence of AI and plant biotechnology is creating unprecedented opportunities:
 
-- **Healthcare**: Surgical robots, rehabilitation assistants
-- **Manufacturing**: Flexible automation, collaborative robots
-- **Service**: Hospitality, retail, home assistance
-- **Exploration**: Space, underwater, hazardous environments
+- **Food Security**: Feed growing populations sustainably
+- **Climate Resilience**: Develop crops that thrive in changing climates
+- **Precision Farming**: Optimize every plant's growth conditions
+- **Disease Prevention**: Early detection saves crops and livelihoods
+- **Biodiversity**: Preserve and enhance crop genetic diversity
 
-**Humanoid robots represent the next frontier** — machines that can seamlessly integrate into human environments, learn from human demonstrations, and collaborate with people naturally.
+**AI in plant biotechnology represents the next agricultural revolution** — transforming how we grow food, manage resources, and ensure global food security.
 
 ## How to Use This Textbook
 
 1. **Read Sequentially**: Modules build on each other
-2. **Practice with Code**: Every concept includes practical examples
-3. **Use the Chatbot**: Ask questions anytime using the embedded AI assistant
-4. **Build Projects**: Apply learning through hands-on projects
-5. **Join the Community**: Connect with fellow learners
+2. **Choose Your Track**: Select software or hardware focus
+3. **Practice with Code**: Every concept includes practical examples
+4. **Use the Chatbot**: Ask questions anytime using the embedded AI assistant
+5. **Build Projects**: Apply learning through hands-on projects
 
 ## RAG Chatbot Assistant
 
@@ -110,14 +125,14 @@ This textbook features an integrated **RAG (Retrieval Augmented Generation) chat
 - Provide code examples and debugging help
 - Respond to queries about selected text
 
-**Try it now!** Use the chat icon in the bottom-right corner to ask any question.
+**Try it now!** Use the chat icon to ask any question about AI in plant biotechnology.
 
 ## Let's Begin!
 
-Physical AI is transforming how machines interact with our world. This journey will equip you with the knowledge and skills to build the next generation of intelligent robots.
+AI is transforming agriculture and plant science. This journey will equip you with the knowledge and skills to build the next generation of smart agricultural systems.
 
-**Next:** [Module 1: Introduction to ROS 2 →](./module-1/ros2-intro)
+**Next:** [Module 1: Machine Learning Foundations →](./module-1/ml-intro)
 
 ---
 
-*This textbook is part of the Panaversity initiative to democratize AI education.*
+*This textbook democratizes AI education for agricultural innovation.*
