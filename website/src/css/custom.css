@@ -81,6 +81,83 @@
   color: #e2f3ff;
 }
 
+/* Mobile navbar sidebar */
+.navbar-sidebar {
+  background: linear-gradient(180deg, rgba(7, 12, 24, 0.98) 0%, rgba(11, 59, 90, 0.98) 100%) !important;
+}
+
+.navbar-sidebar__brand {
+  background: transparent !important;
+  padding: 16px !important;
+}
+
+.navbar-sidebar__brand .navbar__brand {
+  color: #e2f3ff !important;
+}
+
+.navbar-sidebar__items {
+  padding: 16px 8px !important;
+}
+
+.navbar-sidebar__items .menu__list {
+  padding: 0 !important;
+}
+
+.navbar-sidebar__items .menu__link {
+  color: #e2f3ff !important;
+  padding: 14px 20px !important;
+  border-radius: 10px !important;
+  margin: 6px 8px !important;
+  font-size: 16px !important;
+  font-weight: 600 !important;
+  display: flex !important;
+  align-items: center !important;
+  background: rgba(255, 255, 255, 0.05) !important;
+  border: 1px solid rgba(103, 232, 249, 0.1) !important;
+}
+
+.navbar-sidebar__items .menu__link:hover,
+.navbar-sidebar__items .menu__link--active {
+  background: rgba(103, 232, 249, 0.15) !important;
+  color: #67e8f9 !important;
+  border-color: rgba(103, 232, 249, 0.3) !important;
+}
+
+.navbar-sidebar__items .menu__link[href*="github"] {
+  background: rgba(102, 126, 234, 0.15) !important;
+  border-color: rgba(102, 126, 234, 0.2) !important;
+}
+
+.navbar-sidebar__items .menu__link[href*="github"]:hover {
+  background: rgba(102, 126, 234, 0.25) !important;
+}
+
+.navbar-sidebar__close {
+  color: #e2f3ff !important;
+}
+
+/* Backdrop for sidebar */
+.navbar-sidebar__backdrop {
+  background: rgba(0, 0, 0, 0.6) !important;
+}
+
+/* Mobile responsive adjustments */
+@media (max-width: 996px) {
+  .navbar {
+    padding: 0.3rem 1rem;
+  }
+  
+  .navbar__brand {
+    font-size: 14px;
+  }
+  
+  /* Hide sign-in button text on very small screens */
+  .navbar__items--right button {
+    padding: 6px 10px !important;
+    font-size: 12px !important;
+  }
+}
+
 /* Chatbot styles */
 .chatbot-container {
   position: fixed;
@@ -694,13 +771,15 @@
   position: fixed;
   top: 0;
   left: 0;
-  right: 0;
-  bottom: 0;
-  background: rgba(0, 0, 0, 0.7);
+  width: 100vw;
+  height: 100vh;
+  background: rgba(0, 0, 0, 0.8);
   display: flex;
   align-items: center;
   justify-content: center;
-  z-index: 10000;
+  z-index: 99999;
+  padding: 20px;
+  box-sizing: border-box;
   animation: fadeIn 0.2s ease-out;
 }
 
@@ -709,16 +788,34 @@
               radial-gradient(circle at 80% 0%, rgba(34, 211, 238, 0.12), transparent 45%),
               #0b1224;
   border-radius: 20px;
-  padding: 44px;
-  max-width: 520px;
-  width: 92%;
-  max-height: 90vh;
+  padding: 32px;
+  max-width: 480px;
+  width: 100%;
+  max-height: calc(100vh - 40px);
   overflow-y: auto;
-  box-shadow: 0 24px 70px rgba(0, 0, 0, 0.45);
+  box-shadow: 0 24px 70px rgba(0, 0, 0, 0.6);
   position: relative;
   animation: slideUp 0.3s ease-out;
-  border: 1px solid rgba(103, 232, 249, 0.14);
+  border: 1px solid rgba(103, 232, 249, 0.2);
   color: #e8f7ff;
+  margin: auto;
+}
+
+/* Mobile modal adjustments */
+@media (max-width: 520px) {
+  .auth-modal {
+    padding: 24px 20px;
+    border-radius: 16px;
+    max-height: calc(100vh - 20px);
+  }
+  
+  .auth-modal h2 {
+    font-size: 24px;
+  }
+  
+  .auth-modal-subtitle {
+    font-size: 14px;
+  }
 }
 
 [data-theme='dark'] .auth-modal {
@@ -783,6 +880,49 @@
   margin-bottom: 20px;
 }
 
+/* Auth modal has dark background - style form elements for dark context */
+.auth-modal .form-group label {
+  display: block;
+  margin-bottom: 8px;
+  font-weight: 600;
+  font-size: 14px;
+  color: #c9d9e8;
+}
+
+.auth-modal .form-group input,
+.auth-modal .form-group select,
+.auth-modal .form-group textarea {
+  width: 100%;
+  padding: 12px 16px;
+  border: 2px solid rgba(103, 232, 249, 0.2);
+  border-radius: 8px;
+  font-size: 14px;
+  transition: all 0.2s;
+  font-family: inherit;
+  background: rgba(255, 255, 255, 0.08);
+  color: #e8f7ff;
+}
+
+.auth-modal .form-group input::placeholder,
+.auth-modal .form-group textarea::placeholder {
+  color: rgba(200, 217, 232, 0.5);
+}
+
+.auth-modal .form-group input:focus,
+.auth-modal .form-group select:focus,
+.auth-modal .form-group textarea:focus {
+  outline: none;
+  border-color: #67e8f9;
+  box-shadow: 0 0 0 3px rgba(103, 232, 249, 0.15);
+  background: rgba(255, 255, 255, 0.12);
+}
+
+.auth-modal .form-group textarea {
+  resize: vertical;
+  min-height: 80px;
+}
+
+/* Fallback for form-group outside auth modal */
 .form-group label {
   display: block;
   margin-bottom: 8px;
@@ -842,6 +982,60 @@
   gap: 12px;
 }
 
+/* Auth modal radio options - always dark styled */
+.auth-modal .radio-option {
+  display: flex;
+  align-items: flex-start;
+  padding: 16px;
+  border: 2px solid rgba(103, 232, 249, 0.2);
+  border-radius: 12px;
+  cursor: pointer;
+  transition: all 0.2s;
+  background: rgba(255, 255, 255, 0.05);
+}
+
+.auth-modal .radio-option:hover {
+  border-color: rgba(103, 232, 249, 0.4);
+  background: rgba(255, 255, 255, 0.08);
+}
+
+.auth-modal .radio-option input[type="radio"] {
+  margin-top: 2px;
+  margin-right: 12px;
+  cursor: pointer;
+  width: 20px;
+  height: 20px;
+  flex-shrink: 0;
+  accent-color: #67e8f9;
+}
+
+.auth-modal .radio-content {
+  display: flex;
+  flex-direction: column;
+  gap: 4px;
+}
+
+.auth-modal .radio-content strong {
+  font-size: 15px;
+  color: #e8f7ff;
+}
+
+.auth-modal .radio-content span {
+  font-size: 13px;
+  color: #a8c8db;
+}
+
+.auth-modal .radio-option input[type="radio"]:checked + .radio-content strong {
+  color: #67e8f9;
+}
+
+.auth-modal .radio-option:has(input[type="radio"]:checked) {
+  border-color: #67e8f9;
+  background: rgba(103, 232, 249, 0.1);
+  box-shadow: 0 0 0 3px rgba(103, 232, 249, 0.1);
+}
+
+/* Fallback radio option styles outside auth modal */
 .radio-option {
   display: flex;
   align-items: flex-start;
@@ -926,31 +1120,31 @@
 }
 
 .error-message {
-  background: #fee;
-  color: #c33;
+  background: rgba(255, 100, 100, 0.15);
+  color: #ff8080;
   padding: 12px 16px;
   border-radius: 8px;
   margin-bottom: 20px;
   font-size: 14px;
-  border-left: 3px solid #c33;
+  border-left: 3px solid #ff6b6b;
 }
 
 .auth-submit-btn {
   width: 100%;
   padding: 14px;
-  background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
-  color: white;
+  background: linear-gradient(135deg, #67e8f9 0%, #0ea5e9 100%);
+  color: #0b1224;
   border: none;
   border-radius: 8px;
   font-size: 16px;
-  font-weight: 600;
+  font-weight: 700;
   cursor: pointer;
   transition: all 0.2s;
 }
 
 .auth-submit-btn:hover:not(:disabled) {
   transform: translateY(-2px);
-  box-shadow: 0 8px 20px rgba(102, 126, 234, 0.4);
+  box-shadow: 0 8px 20px rgba(103, 232, 249, 0.4);
 }
 
 .auth-submit-btn:disabled {
@@ -962,17 +1156,17 @@
   text-align: center;
   margin-top: 24px;
   font-size: 14px;
-  color: #666;
+  color: #a8c8db;
 }
 
 [data-theme='dark'] .auth-toggle {
-  color: #aaa;
+  color: #a8c8db;
 }
 
 .auth-toggle-btn {
   background: none;
   border: none;
-  color: #667eea;
+  color: #67e8f9;
   font-weight: 600;
   cursor: pointer;
   font-size: 14px;
@@ -984,7 +1178,7 @@
 }
 
 [data-theme='dark'] .auth-toggle-btn {
-  color: #8b9efc;
+  color: #67e8f9;
 }
 
 /* User profile button */

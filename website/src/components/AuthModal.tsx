@@ -1,4 +1,5 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
+import { createPortal } from 'react-dom';
 import { api } from '@site/src/lib/auth';
 import '@site/src/css/custom.css';
 
@@ -7,10 +8,11 @@ interface AuthModalProps {
   onSuccess: (user: any, token: string) => void;
 }
 
-export default function AuthModal({ onClose, onSuccess }: AuthModalProps): React.ReactElement {
+export default function AuthModal({ onClose, onSuccess }: AuthModalProps): React.ReactElement | null {
   const [isLogin, setIsLogin] = useState(true);
   const [loading, setLoading] = useState(false);
   const [error, setError] = useState('');
+  const [mounted, setMounted] = useState(false);
   
   // Form state
   const [email, setEmail] = useState('');
@@ -18,6 +20,16 @@ export default function AuthModal({ onClose, onSuccess }: AuthModalProps): React
   const [name, setName] = useState('');
   const [backgroundType, setBackgroundType] = useState('software');
   const [learningGoals, setLearningGoals] = useState('');
+
+  // Ensure we're on the client side for portal
+  useEffect(() => {
+    setMounted(true);
+    // Prevent body scroll when modal is open
+    document.body.style.overflow = 'hidden';
+    return () => {
+      document.body.style.overflow = 'unset';
+    };
+  }, []);
 
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
@@ -49,7 +61,7 @@ export default function AuthModal({ onClose, onSuccess }: AuthModalProps): React
     }
   };
 
-  return (
+  const modalContent = (
     <div className="auth-modal-overlay" onClick={onClose}>
       <div className="auth-modal" onClick={(e) => e.stopPropagation()}>
         <button className="auth-modal-close" onClick={onClose}>✕</button>
@@ -167,4 +179,9 @@ export default function AuthModal({ onClose, onSuccess }: AuthModalProps): React
       </div>
     </div>
   );
+
+  // Use portal to render modal at document body level
+  if (!mounted) return null;
+  
+  return createPortal(modalContent, document.body);
 }
