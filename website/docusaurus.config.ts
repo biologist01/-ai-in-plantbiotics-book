@@ -8,8 +8,9 @@ const config: Config = {
   tagline: 'Transforming Agriculture with Artificial Intelligence',
   favicon: 'img/favicon.ico',
 
-  url: 'https://biologist01.github.io',
-  baseUrl: '/-ai-in-plantbiotics-book/',
+  // For Vercel deployment - update YOUR_PROJECT_NAME with your Vercel project name
+  url: process.env.VERCEL_URL ? `https://${process.env.VERCEL_URL}` : 'https://your-project-name.vercel.app',
+  baseUrl: '/',
 
   organizationName: 'biologist01',
   projectName: '-ai-in-plantbiotics-book',
