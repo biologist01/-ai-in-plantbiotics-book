@@ -1,5 +1,5 @@
-import {themes as prismThemes} from 'prism-react-renderer';
-import type {Config} from '@docusaurus/types';
+import { themes as prismThemes } from 'prism-react-renderer';
+import type { Config } from '@docusaurus/types';
 import type * as Preset from '@docusaurus/preset-classic';
 
 // Plant Biotechnology AI Textbook configuration
@@ -8,19 +8,19 @@ const config: Config = {
   tagline: 'Transforming Agriculture with Artificial Intelligence',
   favicon: 'img/favicon.ico',
 
-  // For Vercel deployment - update YOUR_PROJECT_NAME with your Vercel project name
-  url: process.env.VERCEL_URL ? `https://${process.env.VERCEL_URL}` : 'https://your-project-name.vercel.app',
-  baseUrl: '/',
+  // For GitHub Pages, ensure `baseUrl` includes the repo name
+  url: 'https://biologist01.github.io', // for GitHub Pages root
+  baseUrl: '/-ai-in-plantbiotics-book/', // Add repo name here
 
-  organizationName: 'biologist01',
-  projectName: '-ai-in-plantbiotics-book',
+  organizationName: 'biologist01', // Your GitHub username
+  projectName: '-ai-in-plantbiotics-book', // Your repository name
 
   onBrokenLinks: 'throw',
   onBrokenMarkdownLinks: 'warn',
 
   i18n: {
     defaultLocale: 'en',
-    locales: ['en'],
+    locales: ['en'], // You can add 'ur' here if you plan to support Urdu translation
   },
 
   presets: [
@@ -28,13 +28,12 @@ const config: Config = {
       'classic',
       {
         docs: {
-          sidebarPath: './sidebars.ts',
-          editUrl:
-            'https://github.com/biologist01/-ai-in-plantbiotics-book/tree/main/website/',
+          sidebarPath: './sidebars.ts', // Path to your sidebar file
+          editUrl: 'https://github.com/biologist01/-ai-in-plantbiotics-book/tree/main/website/',
         },
-        blog: false,
+        blog: false, // Disable blog (if you don't need it)
         theme: {
-          customCss: './src/css/custom.css',
+          customCss: './src/css/custom.css', // Path to custom styles (if any)
         },
       } satisfies Preset.Options,
     ],
@@ -46,7 +45,7 @@ const config: Config = {
       {
         id: 'docs-software',
         path: 'docs-software',
-        routeBasePath: 'docs-software',
+        routeBasePath: 'docs-software', // Custom route
         sidebarPath: './sidebars.ts',
         editUrl: 'https://github.com/biologist01/-ai-in-plantbiotics-book/tree/main/website/',
       },
@@ -56,7 +55,7 @@ const config: Config = {
       {
         id: 'docs-hardware',
         path: 'docs-hardware',
-        routeBasePath: 'docs-hardware',
+        routeBasePath: 'docs-hardware', // Custom route
         sidebarPath: './sidebars.ts',
         editUrl: 'https://github.com/biologist01/-ai-in-plantbiotics-book/tree/main/website/',
       },
@@ -66,8 +65,8 @@ const config: Config = {
       {
         id: 'docs-urdu',
         path: 'docs-urdu',
-        routeBasePath: 'docs-urdu',
-        sidebarPath: './sidebars-urdu.ts',
+        routeBasePath: 'docs-urdu', // Custom route
+        sidebarPath: './sidebars-urdu.ts', // Ensure this file exists
         editUrl: 'https://github.com/biologist01/-ai-in-plantbiotics-book/tree/main/website/',
       },
     ],
@@ -76,8 +75,8 @@ const config: Config = {
       {
         id: 'docs-urdu-software',
         path: 'docs-urdu-software',
-        routeBasePath: 'docs-urdu-software',
-        sidebarPath: './sidebars-urdu.ts',
+        routeBasePath: 'docs-urdu-software', // Custom route
+        sidebarPath: './sidebars-urdu.ts', // Ensure this file exists
         editUrl: 'https://github.com/biologist01/-ai-in-plantbiotics-book/tree/main/website/',
       },
     ],
@@ -86,8 +85,8 @@ const config: Config = {
       {
         id: 'docs-urdu-hardware',
         path: 'docs-urdu-hardware',
-        routeBasePath: 'docs-urdu-hardware',
-        sidebarPath: './sidebars-urdu.ts',
+        routeBasePath: 'docs-urdu-hardware', // Custom route
+        sidebarPath: './sidebars-urdu.ts', // Ensure this file exists
         editUrl: 'https://github.com/biologist01/-ai-in-plantbiotics-book/tree/main/website/',
       },
     ],
@@ -104,7 +103,7 @@ const config: Config = {
       items: [
         {
           type: 'docSidebar',
-          sidebarId: 'tutorialSidebar',
+          sidebarId: 'tutorialSidebar', // Ensure this sidebar ID exists
           position: 'left',
           label: 'Textbook',
         },
