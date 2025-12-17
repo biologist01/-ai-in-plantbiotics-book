@@ -3,14 +3,27 @@ import type { Config } from '@docusaurus/types';
 import type * as Preset from '@docusaurus/preset-classic';
 
 // Plant Biotechnology AI Textbook configuration
+
+// Deployment notes:
+// - GitHub Pages is served from a repo subpath: https://<user>.github.io/<repo>/
+// - Vercel is typically served from the domain root: https://<project>.vercel.app/
+// Docusaurus must be built with a matching `baseUrl` for each hosting target.
+const isVercel = Boolean(process.env.VERCEL || process.env.VERCEL_URL);
+const isGitHubActions = process.env.GITHUB_ACTIONS === 'true';
+const repoBaseUrl = '/-ai-in-plantbiotics-book/';
+const baseUrl = isVercel ? '/' : (isGitHubActions ? repoBaseUrl : '/');
+const siteUrl = isVercel
+  ? `https://${process.env.VERCEL_URL ?? 'ai-in-plantbiotics-book.vercel.app'}`
+  : 'https://biologist01.github.io';
+
 const config: Config = {
   title: 'AI Revolution in Plant Biotechnology',
   tagline: 'Transforming Agriculture with Artificial Intelligence',
   favicon: 'img/favicon.ico',
 
   // For GitHub Pages, ensure `baseUrl` includes the repo name
-  url: 'https://biologist01.github.io', // for GitHub Pages root
-  baseUrl: '/-ai-in-plantbiotics-book/', // Add repo name here
+  url: siteUrl,
+  baseUrl,
 
   organizationName: 'biologist01', // Your GitHub username
   projectName: '-ai-in-plantbiotics-book', // Your repository name

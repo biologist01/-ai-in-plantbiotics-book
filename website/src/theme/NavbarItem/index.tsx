@@ -2,7 +2,28 @@ import React, { useState, useEffect } from 'react';
 import NavbarItem from '@theme-original/NavbarItem';
 import AuthModal from '@site/src/components/AuthModal';
 import { useHistory, useLocation } from '@docusaurus/router';
+import useDocusaurusContext from '@docusaurus/useDocusaurusContext';
 import type { Props } from '@theme/NavbarItem';
+
+function normalizeBaseUrl(baseUrl: string | undefined): string {
+  const value = baseUrl ?? '/';
+  if (!value.startsWith('/')) return `/${value}`;
+  return value.endsWith('/') ? value : `${value}/`;
+}
+
+function addBaseUrl(baseUrl: string, path: string): string {
+  const normalizedBase = normalizeBaseUrl(baseUrl);
+  const normalizedPath = path.startsWith('/') ? path.slice(1) : path;
+  return `${normalizedBase}${normalizedPath}`;
+}
+
+function stripBaseUrl(baseUrl: string, pathname: string): string {
+  const normalizedBase = normalizeBaseUrl(baseUrl);
+  if (pathname.startsWith(normalizedBase)) {
+    return `/${pathname.slice(normalizedBase.length)}`;
+  }
+  return pathname;
+}
 
 export default function NavbarItemWrapper(props: Props): JSX.Element {
   const [showAuthModal, setShowAuthModal] = useState(false);
@@ -10,6 +31,8 @@ export default function NavbarItemWrapper(props: Props): JSX.Element {
   const [isUrdu, setIsUrdu] = useState(false);
   const history = useHistory();
   const location = useLocation();
+  const { siteConfig } = useDocusaurusContext();
+  const baseUrl = normalizeBaseUrl(siteConfig.baseUrl);
 
   useEffect(() => {
     // Check if user is logged in
@@ -33,7 +56,7 @@ export default function NavbarItemWrapper(props: Props): JSX.Element {
     setUser(null);
     // Redirect to home page after logout
     if (location.pathname.includes('/docs-software/') || location.pathname.includes('/docs-hardware/')) {
-      history.push('/plant-biotech-ai/');
+      history.push(baseUrl);
     }
   };
 
@@ -45,14 +68,15 @@ export default function NavbarItemWrapper(props: Props): JSX.Element {
     const backgroundType = userData.background_type; // 'software' or 'hardware'
 
     if (backgroundType) {
+      const relativePathname = stripBaseUrl(baseUrl, location.pathname);
       // If user is on docs page, redirect to their personalized version
-      if (location.pathname.startsWith('/plant-biotech-ai/docs/')) {
-        const pagePath = location.pathname.replace('/plant-biotech-ai/docs/', '');
-        const newPath = `/plant-biotech-ai/docs-${backgroundType}/${pagePath}`;
+      if (relativePathname.startsWith('/docs/')) {
+        const pagePath = relativePathname.replace('/docs/', '');
+        const newPath = addBaseUrl(baseUrl, `/docs-${backgroundType}/${pagePath}`);
         history.push(newPath + location.search + location.hash);
-      } else if (!location.pathname.includes('/docs-software/') && !location.pathname.includes('/docs-hardware/')) {
+      } else if (!relativePathname.includes('/docs-software/') && !relativePathname.includes('/docs-hardware/')) {
         // If user is not on a docs page, redirect to intro of their personalized docs
-        history.push(`/plant-biotech-ai/docs-${backgroundType}/intro`);
+        history.push(addBaseUrl(baseUrl, `/docs-${backgroundType}/intro`));
       }
     }
   };

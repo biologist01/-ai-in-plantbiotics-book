@@ -1,5 +1,6 @@
 import React, { useState, useEffect } from 'react';
 import { useLocation, useHistory } from '@docusaurus/router';
+import useDocusaurusContext from '@docusaurus/useDocusaurusContext';
 import styles from './PersonalizeButton.module.css';
 
 interface User {
@@ -13,6 +14,20 @@ export default function PersonalizeButton(): JSX.Element | null {
   const [isPersonalized, setIsPersonalized] = useState(false);
   const location = useLocation();
   const history = useHistory();
+  const { siteConfig } = useDocusaurusContext();
+  const baseUrl = (siteConfig.baseUrl ?? '/').endsWith('/') ? (siteConfig.baseUrl ?? '/') : `${siteConfig.baseUrl}/`;
+
+  const stripBaseUrl = (pathname: string): string => {
+    if (pathname.startsWith(baseUrl)) {
+      return `/${pathname.slice(baseUrl.length)}`;
+    }
+    return pathname;
+  };
+
+  const addBaseUrl = (path: string): string => {
+    const normalizedPath = path.startsWith('/') ? path.slice(1) : path;
+    return `${baseUrl}${normalizedPath}`;
+  };
 
   useEffect(() => {
     // Get user from localStorage
@@ -44,46 +59,40 @@ export default function PersonalizeButton(): JSX.Element | null {
     }
 
     // Determine current doc path
-    let currentPath = location.pathname;
+    const currentPath = location.pathname;
+    const relativePath = stripBaseUrl(currentPath);
     
     // If already on personalized page, go back to default or Urdu
     if (isPersonalized) {
       // Check if we came from Urdu docs
-      const isUrduPersonalized = currentPath.includes('/docs-urdu-software/') || currentPath.includes('/docs-urdu-hardware/');
+      const isUrduPersonalized = relativePath.includes('/docs-urdu-software/') || relativePath.includes('/docs-urdu-hardware/');
       
       if (isUrduPersonalized) {
         // Go back to Urdu docs
-        currentPath = currentPath
+        const backPath = relativePath
           .replace('/docs-urdu-software/', '/docs-urdu/')
           .replace('/docs-urdu-hardware/', '/docs-urdu/');
+        history.push(addBaseUrl(backPath) + location.search + location.hash);
       } else {
         // Go back to default docs
-        currentPath = currentPath
+        const backPath = relativePath
           .replace('/docs-software/', '/docs/')
           .replace('/docs-hardware/', '/docs/');
+        history.push(addBaseUrl(backPath) + location.search + location.hash);
       }
-      history.push(currentPath + location.search + location.hash);
       return;
     }
 
     // Extract the page path and navigate to personalized version
-    if (currentPath.includes('/plant-biotech-ai/docs-urdu/')) {
-      const pagePath = currentPath.replace('/plant-biotech-ai/docs-urdu/', '');
-      const newPath = `/plant-biotech-ai/docs-urdu-${user.background_type}/${pagePath}`;
-      history.push(newPath + location.search + location.hash);
-    } else if (currentPath.includes('/plant-biotech-ai/docs/')) {
-      const pagePath = currentPath.replace('/plant-biotech-ai/docs/', '');
-      const newPath = `/plant-biotech-ai/docs-${user.background_type}/${pagePath}`;
-      history.push(newPath + location.search + location.hash);
-    } else if (currentPath.includes('/docs-urdu/')) {
+    if (relativePath.includes('/docs-urdu/')) {
       // Handle local development paths for Urdu
-      const pagePath = currentPath.replace('/docs-urdu/', '');
-      const newPath = `/docs-urdu-${user.background_type}/${pagePath}`;
+      const pagePath = relativePath.replace('/docs-urdu/', '');
+      const newPath = addBaseUrl(`/docs-urdu-${user.background_type}/${pagePath}`);
       history.push(newPath + location.search + location.hash);
-    } else if (currentPath.includes('/docs/')) {
+    } else if (relativePath.includes('/docs/')) {
       // Handle local development paths
-      const pagePath = currentPath.replace('/docs/', '');
-      const newPath = `/docs-${user.background_type}/${pagePath}`;
+      const pagePath = relativePath.replace('/docs/', '');
+      const newPath = addBaseUrl(`/docs-${user.background_type}/${pagePath}`);
       history.push(newPath + location.search + location.hash);
     }
   };
