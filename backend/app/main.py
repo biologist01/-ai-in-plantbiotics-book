@@ -159,7 +159,7 @@ class UserResponse(BaseModel):
 @app.get("/")
 async def root():
     return {
-        "message": "Physical AI Textbook RAG API",
+        "message": "AI Revolution in Plant Biotechnology - RAG API",
         "version": "1.0.0",
         "docs": "/docs"
     }
@@ -378,14 +378,14 @@ async def translate_content(request: TranslateRequest):
                 {
                     "role": "system",
                     "content": f"""You are an expert translator specializing in technical documentation.
-Translate the following technical content about Physical AI and Robotics to {request.target_language}.
+Translate the following technical content about AI in Plant Biotechnology to {request.target_language}.
 
 Guidelines:
 1. Maintain technical accuracy
 2. Keep code blocks, syntax, and technical terms intact
 3. Translate explanatory text naturally
 4. Preserve markdown formatting
-5. Keep proper nouns and technical acronyms in English (ROS 2, NVIDIA Isaac, etc.)
+5. Keep proper nouns and technical acronyms in English when appropriate
 6. Ensure the translation is culturally appropriate and technically precise
 
 Return ONLY the translated text without any preamble or explanation."""

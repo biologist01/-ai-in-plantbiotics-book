@@ -15,7 +15,7 @@ class Settings(BaseSettings):
     # Qdrant Configuration
     qdrant_url: str = os.getenv("QDRANT_URL", "")
     qdrant_api_key: str = os.getenv("QDRANT_API_KEY", "")
-    qdrant_collection_name: str = os.getenv("QDRANT_COLLECTION_NAME", "physical_ai_textbook")
+    qdrant_collection_name: str = os.getenv("QDRANT_COLLECTION_NAME", "plant_biotech_ai_book")
     
     # Database Configuration
     database_url: str = os.getenv("DATABASE_URL", "")
@@ -29,8 +29,9 @@ class Settings(BaseSettings):
     host: str = os.getenv("HOST", "0.0.0.0")
     
     # Embedding Configuration
-    embedding_model: str = "embed-english-v3.0"
-    embedding_dimension: int = 384
+    # NOTE: Keep dimension in sync with the Cohere model used in app.vector_db
+    embedding_model: str = os.getenv("EMBEDDING_MODEL", "embed-english-light-v3.0")
+    embedding_dimension: int = int(os.getenv("EMBEDDING_DIMENSION", "384"))
     
     # Chunking Configuration
     chunk_size: int = 1000

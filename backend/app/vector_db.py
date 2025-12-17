@@ -1,5 +1,6 @@
-"""
-Vector Database module using Qdrant and Cohere embeddings (free API)
+"""app.vector_db
+
+Vector database operations using Qdrant + Cohere embeddings.
 """
 from qdrant_client import QdrantClient
 from qdrant_client.models import Distance, VectorParams, PointStruct
@@ -16,10 +17,11 @@ class VectorDB:
             url=settings.qdrant_url,
             api_key=settings.qdrant_api_key
         )
-        self.collection_name = "physical_ai_textbook"
+        self.collection_name = settings.qdrant_collection_name
         # Use Cohere's free embedding API
         self.cohere_client = cohere.Client(settings.cohere_api_key)
-        self.vector_size = 384  # Cohere embed-english-light-v3.0 produces 384-dimensional vectors
+        self.embedding_model = settings.embedding_model
+        self.vector_size = settings.embedding_dimension
     
     def create_collection(self):
         """Create collection if it doesn't exist"""
@@ -35,12 +37,20 @@ class VectorDB:
                 )
             )
             print(f"Collection '{self.collection_name}' created successfully")
+
+    def delete_collection(self):
+        """Delete the collection if it exists."""
+        try:
+            self.client.delete_collection(self.collection_name)
+            print(f"Collection '{self.collection_name}' deleted")
+        except Exception as e:
+            raise RuntimeError(f"Failed to delete collection '{self.collection_name}': {e}")
     
     def get_embeddings(self, texts: List[str]) -> List[List[float]]:
         """Get embeddings for texts using Cohere API"""
         response = self.cohere_client.embed(
             texts=texts,
-            model="embed-english-light-v3.0",
+            model=self.embedding_model,
             input_type="search_document"
         )
         return response.embeddings
@@ -74,7 +84,9 @@ class VectorDB:
                                 "title": doc.get("title", ""),
                                 "content": doc["content"],
                                 "source": doc.get("source", ""),
-                                "language": doc.get("language", "english")
+                                "language": doc.get("language", "english"),
+                                "background": doc.get("background", ""),
+                                "doc_type": doc.get("doc_type", "content"),
                             }
                         )
                     )
@@ -104,7 +116,9 @@ class VectorDB:
                                         "title": doc.get("title", ""),
                                         "content": doc["content"],
                                         "source": doc.get("source", ""),
-                                        "language": doc.get("language", "english")
+                                        "language": doc.get("language", "english"),
+                                        "background": doc.get("background", ""),
+                                        "doc_type": doc.get("doc_type", "content"),
                                     }
                                 )
                             )
@@ -130,7 +144,7 @@ class VectorDB:
             # Use search_query input type for queries
             response = self.cohere_client.embed(
                 texts=[query],
-                model="embed-english-light-v3.0",
+                model=self.embedding_model,
                 input_type="search_query"
             )
             query_embedding = response.embeddings[0]
