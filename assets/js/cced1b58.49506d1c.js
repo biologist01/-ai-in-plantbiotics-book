@@ -1,1 +1,0 @@
-"use strict";(self.webpackChunkplant_biotech_ai=self.webpackChunkplant_biotech_ai||[]).push([[6100],{5852:e=>{e.exports=JSON.parse('{"name":"docusaurus-plugin-content-docs","id":"docs-urdu"}')}}]);

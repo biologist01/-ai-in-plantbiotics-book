@@ -1,0 +1,1 @@
+"use strict";(self.webpackChunkplant_biotech_ai=self.webpackChunkplant_biotech_ai||[]).push([[308],{1705(e){e.exports=JSON.parse('{"name":"docusaurus-plugin-content-docs","id":"docs-urdu-hardware"}')}}]);
