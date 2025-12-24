@@ -37,6 +37,7 @@ export default function VoiceChat({ isOpen, onClose }: VoiceChatProps): React.Re
   const [audioLevel, setAudioLevel] = useState(0);
   const [agentAudioLevel, setAgentAudioLevel] = useState(0);
   const [error, setError] = useState<string | null>(null);
+  const [micWarning, setMicWarning] = useState<string | null>(null);
 
   const roomRef = useRef<LKRoom | null>(null);
   const localAudioTrackRef = useRef<LocalAudioTrack | null>(null);
@@ -47,6 +48,7 @@ export default function VoiceChat({ isOpen, onClose }: VoiceChatProps): React.Re
   const remoteAnalyserRef = useRef<AnalyserNode | null>(null);
   const animationFrameRef = useRef<number | null>(null);
   const transcriptEndRef = useRef<HTMLDivElement>(null);
+  const lowAudioCountRef = useRef<number>(0);
 
   // Scroll to bottom of transcripts
   useEffect(() => {
@@ -66,7 +68,7 @@ export default function VoiceChat({ isOpen, onClose }: VoiceChatProps): React.Re
     return () => clearInterval(interval);
   }, [voiceStatus]);
 
-  // Audio level visualization
+  // Audio level visualization with mic quality detection
   const startAudioVisualization = useCallback((stream: MediaStream, isLocal: boolean) => {
     try {
       if (!audioContextRef.current) {
@@ -75,6 +77,7 @@ export default function VoiceChat({ isOpen, onClose }: VoiceChatProps): React.Re
       const audioContext = audioContextRef.current;
       const analyser = audioContext.createAnalyser();
       analyser.fftSize = 256;
+      analyser.smoothingTimeConstant = 0.3; // Faster response to speech
       const source = audioContext.createMediaStreamSource(stream);
       source.connect(analyser);
       
@@ -93,7 +96,21 @@ export default function VoiceChat({ isOpen, onClose }: VoiceChatProps): React.Re
         
         if (isLocal) {
           setAudioLevel(normalizedLevel);
-          setUserSpeaking(normalizedLevel > 0.1);
+          // Lower threshold for speech detection (0.05 instead of 0.1)
+          const isSpeaking = normalizedLevel > 0.05;
+          setUserSpeaking(isSpeaking);
+          
+          // Monitor for consistently low audio - potential mic issue
+          if (normalizedLevel < 0.02) {
+            lowAudioCountRef.current++;
+            // If low audio for 5+ seconds (300 frames at 60fps), warn user
+            if (lowAudioCountRef.current > 300) {
+              setMicWarning('Mic level is very low. Try speaking louder or check your microphone settings.');
+            }
+          } else {
+            lowAudioCountRef.current = 0;
+            setMicWarning(null);
+          }
         } else {
           setAgentAudioLevel(normalizedLevel);
           setAgentSpeaking(normalizedLevel > 0.1);
@@ -111,6 +128,8 @@ export default function VoiceChat({ isOpen, onClose }: VoiceChatProps): React.Re
     if (animationFrameRef.current) {
       cancelAnimationFrame(animationFrameRef.current);
     }
+    lowAudioCountRef.current = 0;
+    setMicWarning(null);
     setAudioLevel(0);
     setAgentAudioLevel(0);
   }, []);
@@ -151,11 +170,19 @@ export default function VoiceChat({ isOpen, onClose }: VoiceChatProps): React.Re
       const room = new Room({
         adaptiveStream: true,
         dynacast: true,
+        // Optimized audio capture settings for better speech recognition
         audioCaptureDefaults: {
           echoCancellation: true,
-          noiseSuppression: true,
-          autoGainControl: true,
+          noiseSuppression: false, // Disable - can clip quiet speech and cause words to be missed
+          autoGainControl: true,   // Keep - helps normalize volume levels
+          channelCount: 1,         // Mono is better for speech
+          sampleRate: 48000,       // Higher sample rate for better quality
+          sampleSize: 16,          // 16-bit audio
         },
+        audioOutput: {
+          deviceId: 'default',
+        },
+        disconnectOnPageLeave: true,
       });
 
       // Handle remote audio tracks (agent's voice)
@@ -231,15 +258,22 @@ export default function VoiceChat({ isOpen, onClose }: VoiceChatProps): React.Re
       roomRef.current = room;
       callStartTimeRef.current = Date.now();
 
-      // Create and publish local audio track
+      // Create and publish local audio track with optimized settings
       const localAudioTrack = await createLocalAudioTrack({
         echoCancellation: true,
-        noiseSuppression: true,
-        autoGainControl: true,
+        noiseSuppression: false,  // Disabled - browser noise suppression often clips speech
+        autoGainControl: true,    // Helps with varying voice volumes
+        channelCount: 1,          // Mono for speech
+        sampleRate: 48000,        // High quality sample rate
       });
 
+      // Set track to high priority for better transmission
       localAudioTrackRef.current = localAudioTrack;
-      await room.localParticipant.publishTrack(localAudioTrack);
+      await room.localParticipant.publishTrack(localAudioTrack, {
+        audioPreset: livekit.AudioPresets.speech,  // Optimized for speech
+        dtx: true,  // Discontinuous transmission - saves bandwidth during silence
+        red: true,  // Redundant encoding - helps recover lost packets
+      });
 
       // Start visualization for local audio
       const localStream = new MediaStream([localAudioTrack.mediaStreamTrack]);
@@ -412,6 +446,16 @@ export default function VoiceChat({ isOpen, onClose }: VoiceChatProps): React.Re
                     <line x1="12" y1="16" x2="12.01" y2="16"/>
                   </svg>
                   {error}
+                </div>
+              )}
+              {micWarning && (
+                <div className="voice-transcript-warning">
+                  <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2">
+                    <path d="M10.29 3.86L1.82 18a2 2 0 0 0 1.71 3h16.94a2 2 0 0 0 1.71-3L13.71 3.86a2 2 0 0 0-3.42 0z"/>
+                    <line x1="12" y1="9" x2="12" y2="13"/>
+                    <line x1="12" y1="17" x2="12.01" y2="17"/>
+                  </svg>
+                  {micWarning}
                 </div>
               )}
               {transcripts.length === 0 && !currentTranscript && !error && (
