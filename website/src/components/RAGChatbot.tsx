@@ -1,6 +1,10 @@
-import React, { useState, useEffect, useRef } from 'react';
+import React, { useState, useEffect, useRef, lazy, Suspense } from 'react';
 import ReactMarkdown from 'react-markdown';
 import '@site/src/css/custom.css';
+import '@site/src/css/voice-chat.css';
+
+// Lazy load VoiceChat for better performance
+const VoiceChat = lazy(() => import('./VoiceChat'));
 
 interface Message {
   role: 'user' | 'assistant';
@@ -15,6 +19,7 @@ const BACKEND_URL = process.env.NODE_ENV === 'development'
 
 export default function RAGChatbot(): React.ReactElement {
   const [isOpen, setIsOpen] = useState(false);
+  const [isVoiceOpen, setIsVoiceOpen] = useState(false);
   const [messages, setMessages] = useState<Message[]>([
     {
       role: 'assistant',
@@ -41,7 +46,6 @@ export default function RAGChatbot(): React.ReactElement {
       const text = selection?.toString().trim();
       if (text && text.length > 3) {
         setSelectedText(text);
-        // Auto-open chatbot when text is selected
         setIsOpen(true);
       }
     };
@@ -105,111 +109,179 @@ export default function RAGChatbot(): React.ReactElement {
     }
   };
 
-  return (
-    <div className="chatbot-container">
-      {/* Floating button */}
-      {!isOpen && (
-        <button
-          className="chatbot-button"
-          onClick={() => setIsOpen(true)}
-          aria-label="Open chatbot"
-        >
-          💬
-        </button>
-      )}
+  const openVoiceChat = () => {
+    setIsVoiceOpen(true);
+  };
 
-      {/* Chatbot window */}
-      {isOpen && (
-        <div className="chatbot-window">
-          {/* Header */}
-          <div className="chatbot-header">
-            <span>🌱 Plant AI Assistant</span>
+  return (
+    <>
+      <div className="chatbot-container">
+        {/* Floating buttons */}
+        {!isOpen && (
+          <div className="chatbot-fab-container">
+            {/* Voice FAB */}
             <button
-              className="chatbot-close"
-              onClick={() => setIsOpen(false)}
-              aria-label="Close chatbot"
+              className="chatbot-fab voice-fab"
+              onClick={openVoiceChat}
+              aria-label="Start voice chat"
+              title="Talk to Plant AI"
             >
-              ✕
+              <div className="voice-fab-pulse" />
+              <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2">
+                <path d="M12 1a3 3 0 0 0-3 3v8a3 3 0 0 0 6 0V4a3 3 0 0 0-3-3z"/>
+                <path d="M19 10v2a7 7 0 0 1-14 0v-2"/>
+                <line x1="12" y1="19" x2="12" y2="23"/>
+                <line x1="8" y1="23" x2="16" y2="23"/>
+              </svg>
+            </button>
+            {/* Chat FAB */}
+            <button
+              className="chatbot-button"
+              onClick={() => setIsOpen(true)}
+              aria-label="Open chatbot"
+            >
+              💬
             </button>
           </div>
+        )}
 
-          {/* Messages */}
-          <div className="chatbot-messages">
-            {messages.map((msg, idx) => (
-              <div key={idx}>
-                {msg.context && msg.role === 'user' && (
-                  <div className="context-bubble">
-                    <div className="context-label">📄 Context</div>
-                    <div className="context-text">{msg.context}</div>
-                  </div>
-                )}
-                <div
-                  className={`message ${msg.role === 'user' ? 'message-user' : 'message-bot'}`}
+        {/* Chatbot window */}
+        {isOpen && (
+          <div className="chatbot-window">
+            {/* Header */}
+            <div className="chatbot-header">
+              <span>🌱 Plant AI Assistant</span>
+              <div style={{ display: 'flex', gap: 8, alignItems: 'center' }}>
+                {/* Voice Button in Header */}
+                <button
+                  className="chatbot-voice-btn"
+                  onClick={openVoiceChat}
+                  aria-label="Start voice chat"
+                  title="Switch to voice mode"
                 >
-                  {msg.role === 'assistant' ? (
-                    <ReactMarkdown>{msg.content}</ReactMarkdown>
-                  ) : (
-                    msg.content
-                  )}
-                </div>
+                  <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2">
+                    <path d="M12 1a3 3 0 0 0-3 3v8a3 3 0 0 0 6 0V4a3 3 0 0 0-3-3z"/>
+                    <path d="M19 10v2a7 7 0 0 1-14 0v-2"/>
+                    <line x1="12" y1="19" x2="12" y2="23"/>
+                    <line x1="8" y1="23" x2="16" y2="23"/>
+                  </svg>
+                </button>
+                <button
+                  className="chatbot-close"
+                  onClick={() => setIsOpen(false)}
+                  aria-label="Close chatbot"
+                >
+                  ✕
+                </button>
               </div>
-            ))}
-            {loading && (
-              <div className="message message-bot loading-message">
-                <div className="typing-indicator">
-                  <span></span>
-                  <span></span>
-                  <span></span>
-                </div>
-              </div>
-            )}
-            <div ref={messagesEndRef} />
-          </div>
+            </div>
 
-          {/* Input */}
-          <div className="chatbot-input-container">
-            {selectedText && (
-              <div className="selected-text-preview">
-                <div className="selected-text-header">
-                  <span>📄 Selected Context</span>
-                  <button 
-                    className="clear-context-btn"
-                    onClick={() => setSelectedText('')}
-                    title="Clear context"
-                  >
-                    ✕
-                  </button>
-                </div>
-                <div className="selected-text-content">
-                  {selectedText.length > 100 ? selectedText.substring(0, 100) + '...' : selectedText}
-                </div>
-              </div>
-            )}
-            <div className="input-wrapper">
-              <input
-                type="text"
-                className="chatbot-input"
-                placeholder="Ask a question..."
-                value={input}
-                onChange={(e) => setInput(e.target.value)}
-                onKeyPress={handleKeyPress}
-                disabled={loading}
-              />
-              <button
-                className="chatbot-send"
-                onClick={sendMessage}
-                disabled={loading || !input.trim()}
-                title="Send message"
-              >
-                <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
-                  <line x1="22" y1="2" x2="11" y2="13"></line>
-                  <polygon points="22 2 15 22 11 13 2 9 22 2"></polygon>
+            {/* Voice Mode Banner */}
+            <div className="voice-mode-banner" onClick={openVoiceChat}>
+              <div className="voice-mode-icon">
+                <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2">
+                  <path d="M12 1a3 3 0 0 0-3 3v8a3 3 0 0 0 6 0V4a3 3 0 0 0-3-3z"/>
+                  <path d="M19 10v2a7 7 0 0 1-14 0v-2"/>
                 </svg>
-              </button>
+              </div>
+              <div className="voice-mode-text">
+                <span className="voice-mode-title">🎙️ Try Voice Mode!</span>
+                <span className="voice-mode-subtitle">Talk naturally with Plant AI</span>
+              </div>
+              <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" className="voice-mode-arrow">
+                <path d="M9 18l6-6-6-6"/>
+              </svg>
+            </div>
+
+            {/* Messages */}
+            <div className="chatbot-messages">
+              {messages.map((msg, idx) => (
+                <div key={idx}>
+                  {msg.context && msg.role === 'user' && (
+                    <div className="context-bubble">
+                      <div className="context-label">📄 Context</div>
+                      <div className="context-text">{msg.context}</div>
+                    </div>
+                  )}
+                  <div className={`message ${msg.role === 'user' ? 'message-user' : 'message-bot'}`}>
+                    {msg.role === 'assistant' ? (
+                      <ReactMarkdown>{msg.content}</ReactMarkdown>
+                    ) : (
+                      msg.content
+                    )}
+                  </div>
+                </div>
+              ))}
+              {loading && (
+                <div className="message message-bot loading-message">
+                  <div className="typing-indicator">
+                    <span></span>
+                    <span></span>
+                    <span></span>
+                  </div>
+                </div>
+              )}
+              <div ref={messagesEndRef} />
+            </div>
+
+            {/* Input */}
+            <div className="chatbot-input-container">
+              {selectedText && (
+                <div className="selected-text-preview">
+                  <div className="selected-text-header">
+                    <span>📄 Selected Context</span>
+                    <button 
+                      className="clear-context-btn"
+                      onClick={() => setSelectedText('')}
+                      title="Clear context"
+                    >
+                      ✕
+                    </button>
+                  </div>
+                  <div className="selected-text-content">
+                    {selectedText.length > 100 ? selectedText.substring(0, 100) + '...' : selectedText}
+                  </div>
+                </div>
+              )}
+              <div className="input-wrapper">
+                <input
+                  type="text"
+                  className="chatbot-input"
+                  placeholder="Ask a question..."
+                  value={input}
+                  onChange={(e) => setInput(e.target.value)}
+                  onKeyPress={handleKeyPress}
+                  disabled={loading}
+                />
+                <button
+                  className="chatbot-send"
+                  onClick={sendMessage}
+                  disabled={loading || !input.trim()}
+                  title="Send message"
+                >
+                  <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
+                    <line x1="22" y1="2" x2="11" y2="13"></line>
+                    <polygon points="22 2 15 22 11 13 2 9 22 2"></polygon>
+                  </svg>
+                </button>
+              </div>
             </div>
           </div>
-        </div>
+        )}
+      </div>
+
+      {/* Voice Chat Modal */}
+      {isVoiceOpen && (
+        <Suspense fallback={
+          <div className="voice-chat-overlay">
+            <div style={{ display: 'flex', alignItems: 'center', justifyContent: 'center', height: '100%' }}>
+              <div className="voice-loading-spinner" style={{ width: 48, height: 48 }} />
+            </div>
+          </div>
+        }>
+          <VoiceChat isOpen={isVoiceOpen} onClose={() => setIsVoiceOpen(false)} />
+        </Suspense>
       )}
-    </div>
+    </>
   );
 }

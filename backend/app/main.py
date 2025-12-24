@@ -5,6 +5,8 @@ from fastapi import FastAPI, HTTPException, Depends, Header
 from fastapi.middleware.cors import CORSMiddleware
 from pydantic import BaseModel, EmailStr
 from typing import List, Optional, Dict, Any
+import json
+import uuid
 from groq import Groq
 from app.agent import RAGAgent
 from app.vector_db import VectorDB
@@ -119,6 +121,15 @@ class TranslateResponse(BaseModel):
     original: str
     translated: str
     target_language: str
+
+class VoiceSessionRequest(BaseModel):
+    session_id: Optional[str] = None
+    user_name: Optional[str] = None
+
+class VoiceSessionResponse(BaseModel):
+    room: str
+    token: str
+    url: str
 
 class UserPreferenceRequest(BaseModel):
     session_id: str
@@ -292,6 +303,55 @@ async def chat(request: ChatRequest):
         return ChatResponse(response=response)
     except Exception as e:
         raise HTTPException(status_code=500, detail=str(e))
+
+
+@app.post("/voice/session", response_model=VoiceSessionResponse)
+async def create_voice_session(request: VoiceSessionRequest):
+    """Create a LiveKit room token that auto-dispatches the configured agent."""
+    if not settings.livekit_url or not settings.livekit_api_key or not settings.livekit_api_secret:
+        raise HTTPException(
+            status_code=503,
+            detail="LiveKit is not configured. Set LIVEKIT_URL, LIVEKIT_API_KEY, LIVEKIT_API_SECRET.",
+        )
+
+    try:
+        from livekit import api as lkapi
+    except Exception as e:
+        raise HTTPException(
+            status_code=503,
+            detail=f"LiveKit SDK not available on backend: {e}. Ensure livekit-api is installed.",
+        )
+
+    room = f"plant-voice-{uuid.uuid4().hex[:12]}"
+    identity = request.session_id or f"web-{uuid.uuid4().hex[:10]}"
+
+    # Custom greeting and context for the agent
+    metadata = {
+        "user_name": request.user_name or "User",
+        "source": "website",
+        "greeting": "Hi! I'm your Plant Biotechnology AI assistant. Ask me anything about plant genetics, machine learning in agriculture, computer vision for crop analysis, genomics, or any topic from the textbook!",
+        "system_context": "You are a helpful AI assistant for a Plant Biotechnology textbook. Focus on topics like: machine learning for crop analysis, computer vision for plant disease detection, genomics, CRISPR gene editing, and precision agriculture. Be concise and educational.",
+    }
+
+    token = (
+        lkapi.AccessToken(settings.livekit_api_key, settings.livekit_api_secret)
+        .with_identity(identity)
+        .with_name(request.user_name or "User")
+        .with_grants(lkapi.VideoGrants(room_join=True, room=room))
+        .with_room_config(
+            lkapi.RoomConfiguration(
+                agents=[
+                    lkapi.RoomAgentDispatch(
+                        agent_name=settings.livekit_agent_name,
+                        metadata=json.dumps(metadata),
+                    )
+                ]
+            )
+        )
+        .to_jwt()
+    )
+
+    return VoiceSessionResponse(room=room, token=token, url=settings.livekit_url)
 
 @app.post("/search", response_model=SearchResponse)
 async def search(request: SearchRequest):

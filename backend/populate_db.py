@@ -183,7 +183,7 @@ def main():
     vector_db.create_collection()
 
     print("\nAdding documents to vector database...")
-    vector_db.add_documents(documents)
+    vector_db.add_documents(documents, batch_size=96)
 
     print("\nIndexing complete!")
     print(f"   - Chunks indexed: {len(documents)}")

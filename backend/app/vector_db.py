@@ -55,8 +55,11 @@ class VectorDB:
         )
         return response.embeddings
     
-    def add_documents(self, documents: List[Dict[str, str]], batch_size: int = 10):
-        """Add documents to the vector database in batches with rate limiting"""
+    def add_documents(self, documents: List[Dict[str, str]], batch_size: int = 96):
+        """Add documents to the vector database in batches.
+
+        Note: Larger batches drastically reduce embedding API calls.
+        """
         import time
 
         total_docs = len(documents)
@@ -134,9 +137,9 @@ class VectorDB:
                     print(f"Failed retry for batch {batch_start}-{batch_end}: {retry_e}")
                     continue
 
-            # Rate limiting: wait 10 seconds between batches to avoid API limits
+            # Rate limiting: keep a small delay between batches to be gentle to APIs
             if batch_end < total_docs:
-                time.sleep(10)
+                time.sleep(1)
     
     def search(self, query: str, limit: int = 5) -> List[Dict[str, Any]]:
         """Search for similar documents"""

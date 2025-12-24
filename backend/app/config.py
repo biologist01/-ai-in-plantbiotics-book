@@ -27,6 +27,14 @@ class Settings(BaseSettings):
     # Server Configuration
     port: int = int(os.getenv("PORT", "8000"))
     host: str = os.getenv("HOST", "0.0.0.0")
+
+    # LiveKit (Voice Agent)
+    # LIVEKIT_URL should be your LiveKit Cloud URL (wss://...) or self-hosted URL.
+    livekit_url: str = os.getenv("LIVEKIT_URL", "")
+    livekit_api_key: str = os.getenv("LIVEKIT_API_KEY", "")
+    livekit_api_secret: str = os.getenv("LIVEKIT_API_SECRET", "")
+    # Must match @server.rtc_session(agent_name=...) in the agent code.
+    livekit_agent_name: str = os.getenv("LIVEKIT_AGENT_NAME", "plant-biotech-assistant")
     
     # Embedding Configuration
     # NOTE: Keep dimension in sync with the Cohere model used in app.vector_db
