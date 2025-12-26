@@ -35,6 +35,10 @@ class Settings(BaseSettings):
     livekit_api_secret: str = os.getenv("LIVEKIT_API_SECRET", "")
     # Must match @server.rtc_session(agent_name=...) in the agent code.
     livekit_agent_name: str = os.getenv("LIVEKIT_AGENT_NAME", "plant-biotech-assistant")
+
+    # RAG behavior
+    # When enabled, the API will refuse to answer if no relevant context is found in the vector DB.
+    strict_rag_mode: bool = os.getenv("STRICT_RAG_MODE", "false").strip().lower() in {"1", "true", "yes"}
     
     # Embedding Configuration
     # NOTE: Keep dimension in sync with the Cohere model used in app.vector_db

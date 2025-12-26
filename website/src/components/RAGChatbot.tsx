@@ -2,9 +2,11 @@ import React, { useState, useEffect, useRef, lazy, Suspense } from 'react';
 import ReactMarkdown from 'react-markdown';
 import '@site/src/css/custom.css';
 import '@site/src/css/voice-chat.css';
+import '@site/src/css/voice-chat-kids.css';
 
-// Lazy load VoiceChat for better performance
+// Lazy load VoiceChat components for better performance
 const VoiceChat = lazy(() => import('./VoiceChat'));
+const VoiceChatKids = lazy(() => import('./VoiceChatKids'));
 
 interface Message {
   role: 'user' | 'assistant';
@@ -20,6 +22,7 @@ const BACKEND_URL = process.env.NODE_ENV === 'development'
 export default function RAGChatbot(): React.ReactElement {
   const [isOpen, setIsOpen] = useState(false);
   const [isVoiceOpen, setIsVoiceOpen] = useState(false);
+  const [useKidsMode, setUseKidsMode] = useState(true); // Default to kids-friendly mode
   const [messages, setMessages] = useState<Message[]>([
     {
       role: 'assistant',
@@ -270,7 +273,7 @@ export default function RAGChatbot(): React.ReactElement {
         )}
       </div>
 
-      {/* Voice Chat Modal */}
+      {/* Voice Chat Modal - Kids-friendly version */}
       {isVoiceOpen && (
         <Suspense fallback={
           <div className="voice-chat-overlay">
@@ -279,7 +282,11 @@ export default function RAGChatbot(): React.ReactElement {
             </div>
           </div>
         }>
-          <VoiceChat isOpen={isVoiceOpen} onClose={() => setIsVoiceOpen(false)} />
+          {useKidsMode ? (
+            <VoiceChatKids isOpen={isVoiceOpen} onClose={() => setIsVoiceOpen(false)} />
+          ) : (
+            <VoiceChat isOpen={isVoiceOpen} onClose={() => setIsVoiceOpen(false)} />
+          )}
         </Suspense>
       )}
     </>

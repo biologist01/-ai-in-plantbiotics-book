@@ -120,6 +120,13 @@ class RAGAgent:
             context += f"Additional Context:\n{self.retrieve_context(question, limit=3)}"
         else:
             context = self.retrieve_context(question, limit=5)
+
+        if settings.strict_rag_mode and "No context found in the knowledge base." in context:
+            return {
+                "answer": "I couldn't find this in the textbook knowledge base yet. Please ask a question about a specific module/chapter, or rephrase with more detail from the book.",
+                "context_used": context,
+                "model": self.model,
+            }
         
         system_prompt = """You are Plant AI Assistant for the book "AI Revolution in Plant Biotechnology".
     Your role is to answer questions ONLY within the scope of this book and its generated documentation (modules/chapters).
@@ -169,6 +176,9 @@ Guidelines:
             )
 
             context = self.retrieve_context(latest_user_msg, limit=6)
+
+            if settings.strict_rag_mode and "No context found in the knowledge base." in context:
+                return "I couldn't find relevant content for that in the textbook knowledge base yet. Please ask about a specific module/chapter or provide more detail from the book."
 
             system_msg = {
                 "role": "system",
